@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  pentoolbox:
+    build: .
+    container_name: pentoolbox
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./reports:/app/reports    # Les rapports sont sauvegardés sur l'hôte
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN                 # Requis pour arp-scan
+      - NET_RAW                   # Requis pour nmap -sS (SYN scan)
+    network_mode: host            # Accès réseau complet (ARP scan)
