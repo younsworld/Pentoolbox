@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Rapport {{ r.id }} — PenToolbox v4.0</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0d14;color:#e8f4ff;margin:0;padding:0;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+.hdr{background:linear-gradient(135deg,#0f1420,#151b2b);border-bottom:2px solid #00d4ff;padding:40px 60px}
+.hdr h1{font-size:28px;margin:0 0 8px;font-weight:800}
+.hdr h1 span{color:#00d4ff}
+.sub{font-size:13px;color:#7a9cc4;font-family:monospace}
+.body{padding:40px 60px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.mc{background:#0f1420;border:1px solid #1e2d4a;border-radius:10px;padding:16px}
+.mc .l{font-size:10px;color:#3d5a7a;font-family:monospace;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.mc .v{font-size:15px;font-weight:700;font-family:monospace;color:#00d4ff}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.cc{background:#0f1420;border-radius:8px;padding:14px;text-align:center;border:1px solid}
+.cc .n{font-size:28px;font-weight:800;font-family:monospace;line-height:1}
+.cc .ll{font-size:10px;font-family:monospace;color:#3d5a7a;margin-top:4px}
+.st{font-size:12px;font-weight:700;color:#7a9cc4;letter-spacing:1px;text-transform:uppercase;font-family:monospace;margin-bottom:14px;border-left:3px solid #00d4ff;padding-left:10px;margin-top:24px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:10px 12px;font-size:10px;color:#3d5a7a;font-family:monospace;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #1e2d4a}
+td{border-bottom:1px solid #151b2b;vertical-align:top;padding:9px 12px;font-family:monospace}
+.badge{display:inline-block;font-size:10px;font-family:monospace;font-weight:600;padding:3px 8px;border-radius:4px;letter-spacing:1px;text-transform:uppercase}
+.c-critical{background:rgba(255,68,68,.2);color:#ff4444;border:1px solid rgba(255,68,68,.4)}
+.c-high{background:rgba(255,140,0,.15);color:#ff8c00;border:1px solid rgba(255,140,0,.4)}
+.c-medium{background:rgba(255,215,0,.15);color:#ffd700;border:1px solid rgba(255,215,0,.4)}
+.c-low{background:rgba(0,212,255,.1);color:#00d4ff;border:1px solid rgba(0,212,255,.3)}
+.ftr{padding:20px 60px;border-top:1px solid #1e2d4a;font-size:11px;color:#3d5a7a;font-family:monospace}
+@media print{body{background:#fff;color:#000}.hdr{background:#0a0d14;color:#fff}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1>🛡 Pen<span>Toolbox</span> — Rapport de Pentest</h1>
+  <div class="sub">// {{ r.id }} — Généré le {{ r.date_display }} — Usage interne confidentiel</div>
+</div>
+
+<div class="body">
+  <div class="grid3">
+    <div class="mc"><div class="l">Cible</div><div class="v">{{ r.target }}</div></div>
+    <div class="mc"><div class="l">Opérateur</div><div class="v" style="color:#e8f4ff">{{ r.operator }}</div></div>
+    <div class="mc" style="border-color:{% if r.stats.critical > 0 %}rgba(255,68,68,.4){% elif r.stats.high > 0 %}rgba(255,140,0,.4){% else %}rgba(0,212,255,.3){% endif %}">
+      <div class="l">Niveau de risque</div>
+      <div class="v" style="color:{% if r.stats.critical > 0 %}#ff4444{% elif r.stats.high > 0 %}#ff8c00{% elif r.stats.medium > 0 %}#ffd700{% else %}#00ff88{% endif %};font-size:20px">
+        {% if r.stats.critical > 0 %}CRITIQUE{% elif r.stats.high > 0 %}ÉLEVÉ{% elif r.stats.medium > 0 %}MOYEN{% else %}FAIBLE{% endif %}
+      </div>
+    </div>
+    <div class="mc"><div class="l">Date</div><div class="v" style="color:#7a9cc4">{{ r.date_display }}</div></div>
+    <div class="mc"><div class="l">Rapport ID</div><div class="v" style="color:#7a9cc4">{{ r.id }}</div></div>
+    <div class="mc"><div class="l">Expiration</div><div class="v" style="color:#7a9cc4">{{ r.expiry }}</div></div>
+  </div>
+
+  <div class="grid4">
+    <div class="cc" style="border-color:rgba(255,68,68,.4)"><div class="n" style="color:#ff4444">{{ r.stats.critical }}</div><div class="ll">CRITIQUES</div></div>
+    <div class="cc" style="border-color:rgba(255,140,0,.4)"><div class="n" style="color:#ff8c00">{{ r.stats.high }}</div><div class="ll">ÉLEVÉES</div></div>
+    <div class="cc" style="border-color:rgba(255,215,0,.4)"><div class="n" style="color:#ffd700">{{ r.stats.medium }}</div><div class="ll">MOYENNES</div></div>
+    <div class="cc" style="border-color:rgba(0,212,255,.3)"><div class="n" style="color:#00d4ff">{{ r.stats.low }}</div><div class="ll">FAIBLES</div></div>
+  </div>
+
+  <div class="st">Vulnérabilités détectées ({{ r.stats.total }})</div>
+  <table>
+    <thead><tr><th>#</th><th>Sévérité</th><th>Vulnérabilité</th><th>Service</th><th>CVE</th><th>Recommandation</th></tr></thead>
+    <tbody>
+    {% for v in r.vulnerabilities %}
+    <tr>
+      <td>#{{ loop.index }}</td>
+      <td><span class="badge c-{{ v.severity }}">{{ v.severity }}</span></td>
+      <td>{{ v.name }}</td>
+      <td>{{ v.module }}/Port {{ v.port }}</td>
+      <td style="color:#7a9cc4">{{ v.cve or 'N/A' }}</td>
+      <td style="color:#7a9cc4;font-size:11px">{{ v.recommendation or '' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  {% if r.scan_output %}
+  <div class="st">Sortie Nmap</div>
+  <pre style="background:#0f1420;border:1px solid #1e2d4a;border-radius:8px;padding:16px;font-family:monospace;font-size:11px;overflow-x:auto;color:#7a9cc4">{{ r.scan_output }}</pre>
+  {% endif %}
+</div>
+
+<div class="ftr">
+  PenToolbox v4.0 — {{ r.date_display }} — Rapport confidentiel — Usage interne uniquement<br>
+  Ce rapport expire le {{ r.expiry }} et ne doit pas être diffusé en dehors des équipes autorisées.
+</div>
+</body>
+</html>
