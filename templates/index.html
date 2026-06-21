@@ -404,6 +404,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
       <div class="nav-item" onclick="showPage('recon',this)">
         <svg class="nav-icon"><use href="#icon-search"/></svg> Dnsrecon
       </div>
+      <div class="nav-item" onclick="showPage('dns',this)">
+        <svg class="nav-icon"><use href="#icon-globe"/></svg> DNS Lookup
+      </div>
     </div>
 
     <div class="sidebar-section">
@@ -608,6 +611,35 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
       <div class="card" id="recon-results-card" style="display:none">
         <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-map"/></svg> Résultats OSINT</div>
         <div id="recon-structured"></div>
+      </div>
+    </div>
+
+    <!-- DNS LOOKUP (dig / nslookup) -->
+    <div class="page" id="page-dns">
+      <div class="page-header">
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-globe"/></svg> DNS Lookup</h2><p>dig / nslookup — interrogation directe des enregistrements DNS (A, AAAA, MX, NS, TXT, CNAME)</p></div>
+      </div>
+      <div class="alert alert-info"><svg class="icon" style="width:16px;height:16px;flex-shrink:0"><use href="#icon-info"/></svg> <div>Requête DNS directe via <strong>dig</strong> (repli <strong>nslookup</strong>, puis résolution Python). Saisissez un domaine ou un hôte. Le type <strong>ALL</strong> interroge A/AAAA/MX/NS/TXT/CNAME.</div></div>
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Paramètres</div>
+        <div class="tool-row">
+          <div class="field"><label>Domaine / hôte cible</label><input type="text" id="dns-target" placeholder="anthropic.com, google.com..."/></div>
+          <div class="field" style="max-width:200px">
+            <label>Type d'enregistrement</label>
+            <select id="dns-type">
+              <option value="ALL" selected>ALL (tous)</option>
+              <option value="A">A</option>
+              <option value="AAAA">AAAA</option>
+              <option value="MX">MX</option>
+              <option value="NS">NS</option>
+              <option value="TXT">TXT</option>
+              <option value="CNAME">CNAME</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="runDNS()" id="dns-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-search"/></svg> Interroger</button>
+        </div>
+        <div class="progress-bar" id="dns-pb"><div class="progress-fill" id="dns-fill"></div></div>
+        <div class="terminal" id="dns-out"><span class="terminal-ph">> En attente...</span></div>
       </div>
     </div>
 

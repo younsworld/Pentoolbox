@@ -721,16 +721,23 @@ function renderReconSections(s) {
 // ── DNS LOOKUP ─────────────────────────────────────────────────────────────
 async function runDNS() {
   const target = document.getElementById('dns-target').value.trim();
-  const type = document.getElementById('dns-type').value;
-  if (!target) return uiAlert('Entrez un domaine.');
+  const type = document.getElementById('dns-type').value || 'ALL';
+  if (!target) return uiAlert('Entrez un domaine ou un hôte.');
+  // "ALL" interroge plusieurs types (le backend lance `dig <type>` ; ALL n'est pas un type DNS valide).
+  const types = (type === 'ALL') ? ['A','AAAA','MX','NS','TXT','CNAME'] : [type];
   termSet('dns-out', `[*] DNS ${type} → ${target}...`);
   try {
-    const res = await apiFetch('/api/dns', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({target, type})
-    });
-    const data = await res.json();
-    termSet('dns-out', data.output || `[!] ${data.error}`);
+    const blocks = [];
+    for (const t of types) {
+      const res = await apiFetch('/api/dns', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({target, type:t})
+      });
+      const data = await res.json();
+      if (data.error) blocks.push(`;; ===== ${t} =====\n[!] ${data.error}`);
+      else blocks.push((types.length > 1 ? `;; ===== ${t} =====\n` : '') + (data.output || '').trim());
+    }
+    termSet('dns-out', blocks.join('\n\n').trim() || '[!] Aucun résultat');
     ST.stats.scans++; addActivity('search', `DNS ${type} → ${target}`, 'var(--accent)'); updateDashboard();
   } catch(e) { termSet('dns-out', `[!] ${e.message}`); }
 }

@@ -1466,6 +1466,11 @@ def tools_status():
                          "detail": (_tool_version(vcmd) or "installé") if present else "non installé"})
 
     netg = []
+    _dig_ok = is_tool_available("dig"); _nsl_ok = is_tool_available("nslookup")
+    netg.append({"id": "dns-lookup", "label": "DNS Lookup (dig/nslookup)",
+                 "status": "ok" if (_dig_ok or _nsl_ok) else "absent",
+                 "detail": ((", ".join(b for b, ok in (("dig", _dig_ok), ("nslookup", _nsl_ok)) if ok) + " disponible")
+                            if (_dig_ok or _nsl_ok) else "dig & nslookup absents (repli Python socket, enreg. A uniquement)")})
     for tid, label in [("dig", "dig"), ("host", "host"), ("nslookup", "nslookup"),
                        ("curl", "curl"), ("smbclient", "smbclient"), ("enum4linux-ng", "enum4linux-ng"),
                        ("dnsrecon", "dnsrecon (recon passive)")]:

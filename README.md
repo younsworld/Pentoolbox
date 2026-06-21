@@ -9,7 +9,7 @@
 ## 🪟 Windows — Lancement rapide
 
 ```
-Double-clic sur : lancer_windows.bat
+Double-clic sur : LANCER.bat
 ```
 
 Ou en ligne de commande :
@@ -27,8 +27,8 @@ Identifiants par défaut : **admin / pentest2025**
 ## 🐧 Linux / Kali / Ubuntu
 
 ```bash
-chmod +x lancer_linux.sh
-./lancer_linux.sh
+chmod +x scripts/linux/lancer_linux.sh
+./scripts/linux/lancer_linux.sh
 ```
 
 Ou manuellement :
@@ -40,8 +40,11 @@ python3 app/app.py
 ### Installer les outils réseau (Linux)
 ```bash
 sudo apt update
-sudo apt install nmap dnsutils arp-scan nikto sqlmap -y
+sudo apt install nmap dnsutils smbclient nikto sqlmap -y
 ```
+> `dnsutils` fournit `dig`/`nslookup` (DNS Lookup) ; `smbclient` est requis par
+> l'énumération SMB. `dnsrecon`, `hydra`, `john` (jumbo), OpenVAS/gvmd et
+> Metasploit RPC sont fournis par l'image Docker (`docker-compose up`).
 
 ---
 
@@ -84,14 +87,23 @@ c'est nginx qui termine le TLS, donc `cert.pem`/`key.pem` ne sont pas nécessair
 ```
 pentoolbox/
 ├── app/
-│   └── app.py               ← Application Flask (backend)
-├── requirements.txt         ← Dépendances Python
-├── lancer_windows.bat       ← Lanceur Windows
-├── lancer_linux.sh          ← Lanceur Linux/Mac
+│   └── app.py               ← Application Flask (backend, fichier unique)
+├── static/
+│   └── app.js               ← Frontend (SPA, sans framework)
 ├── templates/
 │   ├── index.html           ← Interface principale
 │   └── report_template.html ← Template rapports HTML
-└── reports/                 ← Rapports sauvegardés (JSON)
+├── deploy/
+│   ├── docker/              ← Dockerfile, docker-compose.yml, entrypoint.sh
+│   ├── nginx/               ← Reverse proxy TLS (nginx.conf)
+│   └── openvas/             ← Image OpenVAS/gvmd
+├── scripts/
+│   └── linux/               ← Lanceurs / build Linux
+├── config/                  ← .settings.json (préférences, régénéré au runtime)
+├── requirements.txt         ← Dépendances Python
+├── reports/                 ← Rapports chiffrés (.enc, Fernet) — régénéré au runtime
+├── logs/                    ← audit.log (chiffré) — régénéré au runtime
+└── secrets/                 ← clés/certs/utilisateurs — non livré, régénéré au 1ᵉʳ run
 ```
 
 ---
@@ -101,8 +113,8 @@ pentoolbox/
 | Module | Outil utilisé | Windows | Linux |
 |--------|--------------|---------|-------|
 | DNSDumpster | dig / nslookup / Python socket | ✓ | ✓ |
-| DNS Lookup | dig / nslookup | ✓ | ✓ |
-| ARP / Découverte réseau | arp-scan / nmap -sn | Partiel | ✓ |
+| DNS Lookup | dig / nslookup (repli Python socket) — A/AAAA/MX/NS/TXT/CNAME/ALL | ✓ | ✓ |
+| Dnsrecon (recon passive) | dnsrecon — sous-domaines (Certificate Transparency), DNS, emails | Via WSL | ✓ |
 | Nmap Scan | nmap (natif) | ✓ (si nmap installé) | ✓ |
 | Énumération SMB | enum4linux-ng / smbclient | Via WSL | ✓ |
 | Nikto | nikto | Via WSL | ✓ |
@@ -117,17 +129,64 @@ pentoolbox/
 
 ---
 
-## Changer les identifiants
+## Architecture
 
-Édite `app/app.py`, ligne `USERS` :
-```python
-USERS = {
-    "admin": "votre_mot_de_passe",
-    "analyst": "autre_mdp",
-}
-```
+- **Stack sans build ni framework** : un fichier Flask (`app/app.py`), un fichier JS (`static/app.js`), templates Jinja2.
+- **Pattern de route uniforme** : valider l'entrée → `audit()` → `run_cmd()` (wrapper `subprocess`) → renvoyer stdout/stderr en JSON. Un module = une route.
+- **Persistance en fichiers plats chiffrés** (pas de base de données) : `secrets/.users`, `reports/*.enc`, `logs/audit.log` (tous Fernet).
+- **Auth double** : cookie de session Flask **ou** jeton bearer (`/api/login`), résolus par `require_auth` ; `require_admin` par-dessus.
+- **Frontend SPA** : sections par onglets (`showPage()`), appels via `apiFetch()` (ajoute le bearer) ; RBAC côté client cosmétique, l'enforcement réel est serveur.
+- **Outils-services** (OpenVAS/gvmd, Metasploit RPC) via conteneurs dédiés.
 
 ---
+
+## Sécurité
+
+- Mots de passe **bcrypt** ; comptes / rapports / journal d'audit **chiffrés Fernet** au repos.
+- **RBAC** admin/analyst (`require_admin`), isolation des rapports et sessions **par opérateur**.
+- **HTTPS** : certificat auto-signé en standalone (`_ensure_self_signed_cert()`), **TLS terminé par nginx** en Docker.
+- **Journal d'audit chiffré** (RotatingFileHandler) ; **rate-limiting** du login (5 tentatives / 60 s puis blocage 5 min).
+- Validation des cibles sur le chemin privilégié (`_is_safe_scan_target()`) ; clés générées par installation, **jamais versionnées**.
+
+---
+
+## Déploiement (Docker)
+
+```bash
+docker-compose up --build   # pentoolbox + nginx (TLS) + openvas + metasploit
+```
+
+- Conteneur **non-root** : `entrypoint.sh` (root) `chown` les montages runtime puis `exec gosu pentoolbox` → l'app tourne en **UID 1000**.
+- Capacités `NET_ADMIN`/`NET_RAW` + **carve-out sudoers** ciblé pour les scans nmap privilégiés (`-sS/-O/-sU`).
+- Accès via **`https://localhost/`** (nginx → `pentoolbox:5000`). `secrets/`, `logs/`, `reports/` régénérés au runtime.
+
+---
+
+## Comptes & mots de passe
+
+Les comptes ne sont **pas** stockés en clair dans le code : ils sont **hachés bcrypt**
+et conservés chiffrés (Fernet) dans `secrets/.users`, créés au premier démarrage par
+`load_users()`.
+
+Comptes par défaut (à changer au premier lancement) :
+
+| Identifiant | Mot de passe | Rôle |
+|-------------|--------------|------|
+| `admin`     | `pentest2025`  | admin |
+| `analyst`   | `analyst2025`  | analyst |
+
+**Changer un mot de passe / gérer les comptes** se fait depuis l'interface, page
+**Utilisateurs** (réservée à l'admin) → bouton *Changer mdp* / *Supprimer*
+(route `PUT /api/users/<utilisateur>/password`). Le compte `admin` par défaut est
+protégé (non supprimable, mot de passe modifiable uniquement par lui-même).
+
+---
+
+## Licence & cadre légal
+
+- **Usage strictement autorisé** : tests d'intrusion sur des cibles **consenties** uniquement.
+- **Conformité RGPD** : chiffrement des données au repos (Fernet), journalisation des actions (audit), minimisation des données conservées.
+- Projet **académique** (Mastère Cybersécurité) — fourni à des fins pédagogiques et de recherche défensive.
 
 ## Avertissement légal
 
