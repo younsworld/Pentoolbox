@@ -1,4 +1,9 @@
 #!/bin/bash
+# Script desormais dans scripts/linux/ -> on revient a la racine du projet
+# pour que tous les chemins relatifs ci-dessous (reports, static, templates,
+# app.py, README.md, dist/...) restent corrects.
+cd "$(dirname "$0")/../.." || exit 1
+
 echo "================================================"
 echo "  PenToolbox -- Build Linux standalone"
 echo "================================================"
@@ -23,7 +28,7 @@ pyinstaller \
     --hidden-import dns.resolver \
     --hidden-import werkzeug \
     --console \
-    app.py
+    app/app.py
 
 echo "[3/3] Finalisation..."
 mkdir -p dist/reports

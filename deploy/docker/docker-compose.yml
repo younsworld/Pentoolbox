@@ -1,0 +1,178 @@
+# Sans ce nom explicite, Compose derive le nom de projet du dossier qui
+# contient docker-compose.yml (= "docker" depuis qu'il vit dans
+# deploy/docker/, au lieu de "pentoolbox" a la racine) — ce qui changerait
+# le prefixe des volumes nommes (pentoolbox_openvas_data -> docker_openvas_data)
+# et ferait croire a Compose que les volumes existants n'existent pas. Les
+# flux NVT/SCAP/CERT d'OpenVAS prennent 30-90 min a synchroniser au premier
+# demarrage: perdre ce volume forcerait un resync complet, en silence.
+name: pentoolbox
+
+services:
+  pentoolbox:
+    # docker-compose.yml vit maintenant dans deploy/docker/ -> la racine du
+    # projet (contexte de build attendu par le Dockerfile: requirements.txt,
+    # app.py, templates/, static/) est 2 niveaux au-dessus. Dockerfile a
+    # aussi quitte la racine -> chemin explicite, relatif au contexte.
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+    container_name: pentoolbox
+    # Pas de mapping de port hote: Flask ne doit etre joignable que via nginx
+    # (443, TLS) — voir le service nginx plus bas. expose (et non ports)
+    # documente que 5000 reste joignable par les autres conteneurs du
+    # reseau pentoolbox_net (nginx) sans l'exposer sur l'hote.
+    expose:
+      - "5000"
+    volumes:
+      - ../..:/app
+      - ../../reports:/app/reports
+      - gvmd_socket:/run/gvmd   # socket GMP partage avec openvas — voir _gvm_cli() dans app.py
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    depends_on:
+      openvas:
+        condition: service_healthy
+      metasploit:
+        condition: service_healthy
+    environment:
+      # Timezone local (corrige l'heure des rapports)
+      - TZ=Europe/Paris
+      # Lus par app.py — voir OPENVAS_HOST/PORT/USER/PASSWORD
+      - OPENVAS_HOST=openvas
+      - OPENVAS_PORT=9390
+      - OPENVAS_USER=admin
+      # Mots de passe : valeurs reelles dans .env (gitignore, chmod 600,
+      # cf. deploy/docker/.env) au lieu d'etre en clair ici - visibles via
+      # `docker inspect` sinon.
+      - OPENVAS_PASSWORD=${OPENVAS_PASSWORD}
+      # Lus par app.py — voir MSF_RPC_HOST/PORT/PASSWORD
+      - MSF_RPC_HOST=metasploit
+      - MSF_RPC_PORT=55553
+      - MSF_RPC_PASSWORD=${MSF_RPC_PASSWORD}
+    networks:
+      - pentoolbox_net
+
+  # ── OpenVAS / GVM ────────────────────────────────────────────────────────────
+  # Base: immauss/openvas — choisi plutôt que mikesplain/openvas (abandonné
+  # depuis 2018, feeds NVT obsolètes) ou securecompliance/gvm (maintenance
+  # moins active/régulière). immauss/openvas embarque gvmd+ospd-openvas+GSA
+  # dans un seul conteneur et reçoit encore des mises à jour. Voir le
+  # paragraphe "trade-offs" fourni avec ces changements pour le détail.
+  #
+  # On build: openvas/Dockerfile au lieu d'utiliser l'image telle quelle car
+  # le tag :latest embarque un redis-py incompatible avec ospd-openvas
+  # (crash au démarrage, "Cannot enable maintenance notifications for
+  # connection object that doesn't have a host attribute") — voir le
+  # commentaire dans openvas/Dockerfile pour le détail du bug amont.
+  openvas:
+    # openvas/ est maintenant un sibling de docker/ sous deploy/.
+    build: ../openvas
+    image: pentoolbox-openvas:redis-fix
+    container_name: openvas
+    restart: unless-stopped
+    ports:
+      - "9390:9390"   # GMP/TLS — utilisé par gvm-cli depuis le conteneur pentoolbox
+      - "9392:9392"   # GSA (interface web) — pratique pour inspecter un scan manuellement
+    environment:
+      # Valeur reelle dans .env (gitignore, chmod 600, cf. deploy/docker/.env)
+      # — DOIT rester identique a OPENVAS_PASSWORD ci-dessus pour le service
+      # pentoolbox (meme mot de passe admin GMP, deux noms de variable
+      # differents attendus par les deux cotes).
+      - PASSWORD=${PASSWORD}
+      # gvmd 26.x refuse de cumuler --listen/--listen2 (TCP/TLS) avec
+      # --unix-socket ("gvmd: --listen or --listen2 given with --unix-socket",
+      # CRITICAL, crash-loop immediat) — c'est pour ca qu'immauss/openvas a
+      # retire le listener TCP de single.sh, pas un oubli. --unix-socket reste
+      # necessaire car gsad s'y connecte via --munix-socket. On expose donc le
+      # socket lui-meme (volume partage + --listen-mode=666) plutot que TCP/TLS
+      # — voir le volume gvmd_socket plus bas et app.py::_gvm_cli (mode socket).
+      - GVMD_ARGS=--listen-mode=666
+    volumes:
+      # Les flux NVT/SCAP/CERT pèsent plusieurs Go et leur premier sync prend
+      # 30-90 min: ce volume évite de tout retélécharger à chaque "down/up".
+      - openvas_data:/data
+      - gvmd_socket:/run/gvmd   # expose gvmd.sock au conteneur pentoolbox (cf. GVMD_ARGS plus haut)
+    cap_add:
+      - NET_RAW
+    healthcheck:
+      # gsad runs with --http-only (see openvas/Dockerfile start script) — a TLS
+      # healthcheck (https://) always fails the handshake and reports unhealthy
+      # forever even when gvmd/VTs are fully ready, so this must be plain HTTP.
+      test: ["CMD", "curl", "-f", "http://localhost:9392"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+    networks:
+      - pentoolbox_net
+
+  # ── Reverse proxy / TLS ──────────────────────────────────────────────────────
+  # SSL termine ici, jamais dans Flask (app.py::ssl_context reste None) ni dans
+  # OpenVAS — cf. tache "HTTPS Security": un seul point d'entree chiffre vers
+  # l'hote, le reste du trafic inter-conteneurs (nginx -> pentoolbox:5000)
+  # reste en clair sur le reseau Docker interne pentoolbox_net.
+  nginx:
+    image: nginx:alpine
+    container_name: pentoolbox-nginx
+    restart: unless-stopped
+    depends_on:
+      - pentoolbox
+    ports:
+      - "443:443"
+      - "80:80"   # redirection vers 443 uniquement (cf. nginx/nginx.conf)
+    volumes:
+      # nginx/ est maintenant un sibling de docker/ sous deploy/.
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # Certificats générés par pentoolbox (auto-signés)
+      - ../../secrets:/app/secrets:ro
+    networks:
+      - pentoolbox_net
+
+  # ── Metasploit RPC ───────────────────────────────────────────────────────────
+  # msfrpcd est un demon long-running (pas un binaire one-shot comme nmap/nikto)
+  # -> meme traitement async que OpenVAS (job_id + poll) cote app.py, voir
+  # _msf_worker()/MSF_JOBS. Modules exposables limites a auxiliary/scanner/* par
+  # MSF_ALLOWED_MODULES (cote serveur, pas seulement le <select> du frontend) —
+  # contrainte ethique du labo: pas d'exploit/, pas de generation de payload.
+  metasploit:
+    image: metasploitframework/metasploit-framework
+    container_name: metasploit
+    restart: unless-stopped
+    # MSF_UID=0: evite l'ambiguite du HOME (l'entrypoint switche par defaut sur
+    # un utilisateur "msf" non-root dont le HOME — donc le cache .msf4 — varie
+    # selon l'image; en root c'est /root, deterministe et verifie).
+    # -S desactive le SSL du socket RPC (le flag est a contre-sens de son nom):
+    # trafic en clair, mais uniquement sur le reseau Docker interne
+    # pentoolbox_net, jamais expose a l'hote — meme principe que gvmd_socket.
+    command: ["./msfrpcd", "-P", "${MSF_RPC_PASSWORD:-msfpass}", "-S", "-a", "0.0.0.0", "-p", "55553", "-f"]
+    environment:
+      - MSF_UID=0
+      # Valeur reelle dans .env (gitignore, chmod 600) — DOIT rester
+      # identique au MSF_RPC_PASSWORD lu par le service pentoolbox ci-dessus.
+      - MSF_RPC_PASSWORD=${MSF_RPC_PASSWORD}
+    volumes:
+      # Cache des modules/BDD msf — evite un rechargement long a chaque restart.
+      - metasploit_data:/root/.msf4
+    healthcheck:
+      # 127.0.0.1, pas "localhost": resout en ::1 en premier dans ce conteneur
+      # et msfrpcd n'ecoute que sur l'IPv4 0.0.0.0, donc le busybox nc local
+      # echoue silencieusement sur l'essai IPv6 (verifie empiriquement).
+      test: ["CMD", "nc", "-z", "127.0.0.1", "55553"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 90s   # chargement initial du framework + des modules
+    networks:
+      - pentoolbox_net
+    # Pas de mapping de port hote: RPC interne uniquement, comme gvmd_socket.
+
+networks:
+  pentoolbox_net:
+    driver: bridge
+
+volumes:
+  openvas_data:
+  gvmd_socket:
+  metasploit_data:

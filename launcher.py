@@ -6,6 +6,7 @@ Il ouvre automatiquement le navigateur et gère le chemin des ressources.
 
 import sys
 import os
+import secrets
 import threading
 import webbrowser
 import time
@@ -31,14 +32,13 @@ app = Flask(
     template_folder=resource_path('templates'),
     static_folder=resource_path('static'),
 )
-app.secret_key = "pentoolbox_secret_2025_changeme"
+app.secret_key = secrets.token_hex(32)  # genere a l'execution — aucun secret en dur
 CORS(app)
 
-# ── Même code que app.py (copié ici pour le bundle) ─────────────────────────
-USERS = {
-    "admin": "pentest2025",
-    "analyst": "analyst2025",
-}
+# ── Authentification ────────────────────────────────────────────────────────
+# Les comptes sont geres par app.app.load_users() (bcrypt + stockage chiffre).
+# Aucune liste d'identifiants en clair ici (cf. CLAUDE.md : launcher.py est un
+# entrypoint obsolete qui delegue a app.app).
 
 def is_tool_available(tool):
     return shutil.which(tool) is not None
@@ -79,5 +79,8 @@ if __name__ == "__main__":
     threading.Thread(target=open_browser, daemon=True).start()
 
     # Lance Flask
-    from app import app as flask_app
+    # app.py vit desormais dans app/ (cf. restructuration) — import depuis le
+    # sous-paquet. Rappel: launcher.py reste un entrypoint obsolete (cf.
+    # CLAUDE.md), ce correctif ne fait que suivre le deplacement du fichier.
+    from app.app import app as flask_app
     flask_app.run(host="127.0.0.1", port=5000, debug=False, use_reloader=False)

@@ -1,6 +1,10 @@
 #!/bin/bash
 # PenToolbox v4.0 — Installateur automatique Linux/Mac
 
+# Script desormais dans scripts/linux/ -> on revient a la racine du projet
+# pour que les chemins relatifs ci-dessous (reports, static, app.py) restent corrects.
+cd "$(dirname "$0")/../.." || exit 1
+
 BOLD='\033[1m'
 GREEN='\033[0;32m'
 CYAN='\033[0;36m'
@@ -147,18 +151,17 @@ echo -e "${GREEN}╔════════════════════
 echo -e "${GREEN}║         TOUT EST PRÊT — Lancement...          ║${NC}"
 echo -e "${GREEN}╚═══════════════════════════════════════════════╝${NC}"
 echo ""
-echo -e "  🌐 Interface : ${CYAN}http://localhost:5000${NC}"
-echo -e "  👤 Login    : ${CYAN}admin / pentest2025${NC}"
+echo -e "  🌐 Interface : ${CYAN}https://localhost:5000${NC}"
 echo -e "  ⏹  Arrêt    : Ctrl+C"
 echo ""
 
 # Ouvre le navigateur après 2 secondes (en arrière-plan)
 (sleep 2 && (
-    if command -v xdg-open &>/dev/null; then xdg-open http://localhost:5000
-    elif command -v open &>/dev/null; then open http://localhost:5000
-    elif command -v sensible-browser &>/dev/null; then sensible-browser http://localhost:5000
+    if command -v xdg-open &>/dev/null; then xdg-open https://localhost:5000
+    elif command -v open &>/dev/null; then open https://localhost:5000
+    elif command -v sensible-browser &>/dev/null; then sensible-browser https://localhost:5000
     fi
 )) &
 
 # Lance Flask
-$PYTHON_CMD app.py
+$PYTHON_CMD app/app.py

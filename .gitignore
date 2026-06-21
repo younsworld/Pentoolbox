@@ -1,0 +1,28 @@
+# ── Secrets — never commit ──────────────────────────────────────────────────
+/secrets/
+.secret_key
+.fernet_key
+.users
+*.pem
+.env
+
+# ── Generated / runtime data ─────────────────────────────────────────────────
+/logs/
+/reports/
+audit.log
+.dashboard_stats
+*.enc
+/config/.settings.json
+
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+build/
+dist/
+
+# ── OS / editor cruft ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
