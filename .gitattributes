@@ -1,0 +1,5 @@
+# Windows launcher/installer scripts must keep CRLF line endings —
+# cmd.exe (especially on non-Latin locales like Korean Windows) misparses
+# LF-terminated .bat files, splitting commands at wrong byte boundaries.
+scripts/windows/*.bat text eol=crlf
+scripts/windows/*.ps1 text eol=crlf

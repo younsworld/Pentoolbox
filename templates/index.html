@@ -6,61 +6,71 @@
 <title>PenToolbox v4.0</title>
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 :root {
-  --bg:#0a0d14;--bg2:#0f1420;--bg3:#151b2b;--border:#1e2d4a;--border2:#2a3d5c;
-  --accent:#00d4ff;--accent3:#004d6e;--green:#00ff88;--green2:#00b86b;
-  --red:#ff4444;--orange:#ff8c00;--yellow:#ffd700;
-  --text:#e8f4ff;--text2:#7a9cc4;--text3:#3d5a7a;
-  --mono:'JetBrains Mono',monospace;--sans:'Syne',sans-serif;
-  --r:8px;--r2:12px;
+  --bg:#0a0a0b;--bg2:#131415;--bg3:#1c1d1f;--border:#262729;--border2:#34363a;
+  --accent:#b9f23c;--accent3:#28330f;--green:#34d399;--green2:#10b981;
+  --red:#ff5757;--orange:#ff9500;--yellow:#ffd60a;
+  --text:#f4f5f3;--text2:#9a9ca0;--text3:#5c5e62;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;
+  --r:14px;--r2:20px;--rpill:999px;
+  --sh1:0 1px 2px rgba(0,0,0,.5);
+  --sh2:0 6px 16px rgba(0,0,0,.4),0 1px 2px rgba(0,0,0,.5);
+  --sh3:0 16px 32px rgba(0,0,0,.45),0 2px 6px rgba(0,0,0,.35);
+  --card-grad:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0) 45%);
 }
 *{margin:0;padding:0;box-sizing:border-box}
+.icon{width:18px;height:18px;flex-shrink:0;stroke:currentColor;fill:none}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.01) 2px,rgba(0,212,255,0.01) 4px);pointer-events:none;z-index:0}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 15% 0%,rgba(185,242,60,0.05),transparent 45%);pointer-events:none;z-index:0}
 
 /* LOGIN */
 #login-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:1000}
-.login-card{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:48px 40px;width:380px;position:relative;overflow:hidden}
-.login-card::before{content:'';position:absolute;top:-80px;left:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,212,255,0.08),transparent 70%);pointer-events:none}
+.login-card{background:var(--card-grad),var(--bg2);border:1px solid var(--border2);border-radius:var(--r2);padding:48px 40px;width:380px;position:relative;overflow:hidden;box-shadow:var(--sh3)}
+.login-card::before{content:'';position:absolute;top:-80px;left:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(185,242,60,0.1),transparent 70%);pointer-events:none}
 .login-logo{display:flex;align-items:center;gap:12px;margin-bottom:32px}
-.logo-icon{width:40px;height:40px;background:var(--accent3);border:1px solid var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo-icon{width:40px;height:40px;background:var(--accent3);border:1px solid var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px}
 .login-logo h1{font-size:22px;font-weight:800;letter-spacing:-.5px}
 .login-logo h1 span{color:var(--accent)}
 .login-sub{font-size:13px;color:var(--text2);margin-bottom:32px;font-family:var(--mono)}
 .fg{margin-bottom:20px}
-.fg label{display:block;font-size:12px;font-weight:600;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-family:var(--mono)}
-.fg input{width:100%;padding:12px 16px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:var(--mono);font-size:14px;outline:none;transition:border-color .2s}
-.fg input:focus{border-color:var(--accent)}
-.login-err{background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.3);border-radius:var(--r);padding:10px 14px;font-size:12px;color:var(--red);font-family:var(--mono);margin-bottom:16px;display:none}
-.btn-login{width:100%;padding:14px;background:var(--accent3);border:1px solid var(--accent);border-radius:var(--r);color:var(--accent);font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:1px;text-transform:uppercase}
-.btn-login:hover{background:var(--accent);color:var(--bg)}
-.login-hint{margin-top:20px;font-size:11px;color:var(--text3);font-family:var(--mono);text-align:center}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.3px;margin-bottom:8px;font-family:var(--sans)}
+.fg input{width:100%;padding:12px 16px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:var(--sans);font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s}
+.fg input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(185,242,60,.15)}
+.login-err{background:rgba(255,87,87,.1);border:1px solid rgba(255,87,87,.3);border-radius:var(--r);padding:10px 14px;font-size:12px;color:var(--red);font-family:var(--sans);margin-bottom:16px;display:none;align-items:center;gap:8px}
+.btn-login{width:100%;padding:14px;background:var(--accent);border:1px solid var(--accent);border-radius:var(--r);color:#0a0a0b;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.3px}
+.btn-login:hover{box-shadow:0 0 20px rgba(185,242,60,.4);filter:brightness(1.08)}
 
 /* APP */
 #app{display:none}
 .app-layout{display:grid;grid-template-columns:240px 1fr;grid-template-rows:56px 1fr;min-height:100vh}
 
 /* TOPBAR */
-.topbar{grid-column:1/-1;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:16px;position:sticky;top:0;z-index:100}
+.topbar{grid-column:1/-1;background:var(--bg2);border-bottom:1px solid var(--border);box-shadow:var(--sh1);display:flex;align-items:center;padding:0 20px;gap:16px;position:sticky;top:0;z-index:100}
 .topbar-logo{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;letter-spacing:-.5px}
 .topbar-logo span{color:var(--accent)}
-.topbar-badge{font-size:10px;font-family:var(--mono);color:var(--accent);background:var(--accent3);border:1px solid var(--accent);padding:2px 8px;border-radius:4px;letter-spacing:1px}
+.topbar-badge{font-size:10px;font-family:var(--mono);color:var(--accent);background:var(--accent3);border:1px solid var(--accent);padding:2px 9px;border-radius:var(--rpill);letter-spacing:1px}
 .topbar-spacer{flex:1}
 .sys-info{font-size:11px;font-family:var(--mono);color:var(--text3)}
-.topbar-user{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:6px 12px;font-size:12px;font-family:var(--mono)}
-.btn-logout{background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.3);border-radius:var(--r);padding:6px 12px;color:var(--red);font-size:12px;font-family:var(--mono);cursor:pointer;transition:all .2s}
-.btn-logout:hover{background:var(--red);color:#fff}
+.topbar-user{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rpill);padding:6px 14px;font-size:12px;font-family:var(--sans);font-weight:600}
+.btn-logout{display:inline-flex;align-items:center;gap:6px;background:rgba(255,87,87,.1);border:1px solid rgba(255,87,87,.3);border-radius:var(--rpill);padding:6px 14px;color:var(--red);font-size:12px;font-family:var(--sans);font-weight:600;cursor:pointer;transition:all .2s}
+.btn-hamburger{display:none;align-items:center;justify-content:center;width:36px;height:36px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);color:var(--text2);cursor:pointer;flex-shrink:0}
+.btn-hamburger:hover{color:var(--text);border-color:var(--border2)}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90}
+.btn-logout:hover{background:var(--red);color:#0a0a0b}
 
 /* SIDEBAR */
-.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:20px 12px;overflow-y:auto}
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);box-shadow:2px 0 12px rgba(0,0,0,.25);padding:20px 12px;overflow-y:auto}
 .sidebar-section{margin-bottom:24px}
-.sidebar-section-title{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:2px;text-transform:uppercase;font-family:var(--mono);padding:0 8px 8px}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r);cursor:pointer;transition:all .15s;font-size:13px;color:var(--text2);font-weight:600;margin-bottom:2px}
-.nav-item:hover{background:var(--bg3);color:var(--text)}
-.nav-item.active{background:var(--accent3);color:var(--accent);border:1px solid rgba(0,212,255,.2)}
-.nav-icon{font-size:15px;width:18px;text-align:center}
-.nav-badge{margin-left:auto;font-size:10px;font-family:var(--mono);background:rgba(0,212,255,.15);color:var(--accent);padding:2px 6px;border-radius:4px}
+.sidebar-section-title{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;font-family:var(--sans);padding:0 8px 8px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r);cursor:pointer;transition:background .15s,color .15s,transform .15s;font-size:13px;color:var(--text2);font-weight:600;margin-bottom:2px;border-left:2px solid transparent}
+.nav-item:hover{background:var(--bg3);color:var(--text);transform:translateX(2px)}
+.nav-item .nav-icon{transition:transform .15s}
+.nav-item:hover .nav-icon{transform:scale(1.08)}
+.nav-item.active{background:var(--accent3);color:var(--accent);border:1px solid rgba(185,242,60,.25);border-left:2px solid var(--accent);box-shadow:0 0 0 1px rgba(185,242,60,.05),0 4px 10px rgba(185,242,60,.1)}
+.nav-icon{width:17px;height:17px;flex-shrink:0;stroke:currentColor;fill:none;opacity:.85}
+.nav-item.active .nav-icon,.nav-item:hover .nav-icon{opacity:1}
+.nav-badge{margin-left:auto;font-size:10px;font-family:var(--sans);font-weight:700;background:rgba(185,242,60,.15);color:var(--accent);padding:2px 7px;border-radius:var(--rpill)}
 .tool-ok{color:var(--green)}
 .tool-ko{color:var(--red)}
 
@@ -69,32 +79,36 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .page{display:none}
 .page.active{display:block}
 .page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px}
-.page-header h2{font-size:24px;font-weight:800;letter-spacing:-.5px}
-.page-header p{font-size:13px;color:var(--text2);margin-top:4px;font-family:var(--mono)}
+.page-header h2{font-size:26px;font-weight:800;letter-spacing:-.5px;font-family:var(--sans)}
+.page-header p{font-size:13px;color:var(--text2);margin-top:4px;font-family:var(--sans)}
 
 /* CARDS */
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:20px;margin-bottom:16px}
-.card-title{font-size:13px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;font-family:var(--mono);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card{background:var(--card-grad),var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:22px;margin-bottom:16px;box-shadow:var(--sh2);transition:border-color .2s,box-shadow .2s}
+.card:hover{border-color:var(--border2);box-shadow:var(--sh3)}
+.card-title{font-size:13px;font-weight:700;color:var(--text2);letter-spacing:.3px;font-family:var(--sans);margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .tool-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
 .field{flex:1;min-width:180px}
-.field label{display:block;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:1px;text-transform:uppercase;font-family:var(--mono);margin-bottom:6px}
-.field input,.field select{width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:border-color .2s}
-.field input:focus,.field select:focus{border-color:var(--accent)}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.3px;text-transform:uppercase;font-family:var(--sans);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(185,242,60,.15)}
 .field select option{background:var(--bg3)}
-.btn{padding:10px 20px;border-radius:var(--r);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;letter-spacing:.5px}
-.btn-primary{background:var(--accent3);border:1px solid var(--accent);color:var(--accent)}
-.btn-primary:hover{background:var(--accent);color:var(--bg)}
-.btn-primary:disabled{opacity:.4;cursor:not-allowed}
-.btn-danger{background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.3);color:var(--red)}
-.btn-danger:hover{background:var(--red);color:#fff}
-.btn-success{background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);color:var(--green)}
-.btn-success:hover{background:var(--green2);color:#000}
-.btn-warning{background:rgba(255,140,0,.1);border:1px solid rgba(255,140,0,.3);color:var(--orange)}
-.btn-warning:hover{background:var(--orange);color:#000}
+.btn{padding:10px 20px;border-radius:var(--r);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;letter-spacing:.2px;box-shadow:var(--sh1)}
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+.btn:active:not(:disabled){transform:translateY(1px)}
+.btn-primary{background:var(--accent);border:1px solid var(--accent);color:#0a0a0b}
+.btn-primary:hover{box-shadow:0 0 16px rgba(185,242,60,.4);filter:brightness(1.08)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.btn-danger{background:rgba(255,87,87,.1);border:1px solid rgba(255,87,87,.3);color:var(--red)}
+.btn-danger:hover{background:var(--red);color:#fff;box-shadow:0 0 16px rgba(255,87,87,.35)}
+.btn-success{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:var(--green)}
+.btn-success:hover{background:var(--green2);color:#04130d;box-shadow:0 0 16px rgba(52,211,153,.3)}
+.btn-warning{background:rgba(255,149,0,.1);border:1px solid rgba(255,149,0,.3);color:var(--orange)}
+.btn-warning:hover{background:var(--orange);color:#1a0f00;box-shadow:0 0 16px rgba(255,149,0,.3)}
 
 /* TERMINAL */
-.terminal{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:16px;font-family:var(--mono);font-size:12px;line-height:1.8;min-height:220px;max-height:520px;overflow-y:auto;margin-top:16px;white-space:pre-wrap;word-break:break-all}
+.terminal{background:#070910;border:1px solid var(--border);border-radius:var(--r);padding:16px;font-family:var(--mono);font-size:12px;line-height:1.8;min-height:220px;max-height:520px;overflow-y:auto;margin-top:16px;white-space:pre-wrap;word-break:break-all;box-shadow:inset 0 2px 8px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.02);position:relative}
 .terminal-ph{color:var(--text3)}
+.terminal-ph::before{content:'●';color:var(--text3);margin-right:6px;animation:pulse 2s infinite}
 .t-info{color:var(--accent)}
 .t-ok{color:var(--green)}
 .t-warn{color:var(--orange)}
@@ -102,80 +116,143 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .t-dim{color:var(--text3)}
 .t-port{color:var(--yellow)}
 .t-bold{color:var(--text);font-weight:600}
+.t-success{font-weight:700;text-shadow:0 0 8px rgba(86,211,100,.35)}
+/* Bannières de notification (toasts) — succès/erreur/info */
+#notify-stack{position:fixed;top:64px;right:18px;z-index:6000;display:flex;flex-direction:column;gap:10px;max-width:380px;pointer-events:none}
+.notify-toast{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:12px;background:var(--surface2,#16181b);border:1px solid var(--border,#26282c);box-shadow:0 12px 30px rgba(0,0,0,.45);font-family:var(--sans);font-size:13px;color:var(--text,#e6e6e6);transform:translateX(120%);opacity:0;transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .35s;pointer-events:auto;cursor:pointer}
+.notify-toast.show{transform:translateX(0);opacity:1}
+.notify-msg{line-height:1.35;word-break:break-word}
+.notify-success{border-color:var(--green,#56d364);background:linear-gradient(180deg,rgba(86,211,100,.14),rgba(86,211,100,.04)),var(--surface2,#16181b)}
+.notify-success svg{color:var(--green,#56d364)}
+.notify-error{border-color:var(--red,#ff5757)}
+.notify-error svg{color:var(--red,#ff5757)}
+.notify-info svg{color:var(--accent,#b9f23c)}
+.check-inline{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12.5px;color:var(--text2);cursor:pointer;user-select:none}
+.check-inline input{accent-color:var(--accent);width:15px;height:15px;cursor:pointer}
 
 /* PROGRESS */
-.progress-bar{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:12px;display:none}
-.progress-fill{height:100%;background:var(--accent);transition:width .3s ease;width:0%}
+.progress-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:12px;display:none;box-shadow:inset 0 1px 2px rgba(0,0,0,.5)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent3),var(--accent));background-size:30px 100%;transition:width .3s ease;width:0%;box-shadow:0 0 8px rgba(185,242,60,.6);position:relative;overflow:hidden}
+.progress-fill::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.18) 0 6px,transparent 6px 12px);animation:stripe-move 1s linear infinite}
+@keyframes stripe-move{from{background-position:0 0}to{background-position:24px 0}}
 
 /* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
-.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px}
-.stat-value{font-size:28px;font-weight:800;font-family:var(--mono);line-height:1}
-.stat-label{font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;margin-top:6px}
+.stat-card{background:var(--card-grad),var(--bg2);border:1px solid var(--border);border-left:3px solid var(--border2);border-radius:var(--r);padding:18px;box-shadow:var(--sh2);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--sh3)}
+.stat-card::after{content:'';position:absolute;top:-30px;right:-30px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,var(--stat-glow,transparent),transparent 70%);opacity:.5;pointer-events:none}
+.stat-value{font-size:30px;font-weight:800;font-family:var(--sans);line-height:1;letter-spacing:-.5px}
+.stat-label{font-size:11px;color:var(--text3);font-family:var(--sans);font-weight:600;letter-spacing:.3px;text-transform:uppercase;margin-top:6px}
+.stat-card.danger{border-left-color:var(--red);--stat-glow:rgba(255,87,87,.5)}
 .stat-card.danger .stat-value{color:var(--red)}
+.stat-card.info{border-left-color:var(--accent);--stat-glow:rgba(185,242,60,.5)}
 .stat-card.info .stat-value{color:var(--accent)}
+.stat-card.success{border-left-color:var(--green);--stat-glow:rgba(52,211,153,.5)}
 .stat-card.success .stat-value{color:var(--green)}
+.stat-card.warning{border-left-color:var(--orange);--stat-glow:rgba(255,149,0,.5)}
 .stat-card.warning .stat-value{color:var(--orange)}
+.stat-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative;z-index:1;transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.stat-card:hover .stat-icon{transform:scale(1.1) rotate(-4deg)}
+.stat-icon .icon{width:17px;height:17px}
+.stat-card.danger .stat-icon{background:rgba(255,87,87,.12);color:var(--red)}
+.stat-card.info .stat-icon{background:rgba(185,242,60,.12);color:var(--accent)}
+.stat-card.success .stat-icon{background:rgba(52,211,153,.12);color:var(--green)}
+.stat-card.warning .stat-icon{background:rgba(255,149,0,.12);color:var(--orange)}
+
+/* BENTO LAYOUT */
+.bento-row{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:16px;align-items:stretch}
+.bento-hero{display:flex;flex-direction:column}
+.bento-hero canvas{flex:1}
+.bento-side{display:flex;flex-direction:column;gap:16px}
+.bento-side .card{margin-bottom:0}
+.live-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-family:var(--sans);font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--accent);background:rgba(185,242,60,.1);border:1px solid rgba(185,242,60,.25);padding:4px 10px;border-radius:var(--rpill)}
+
+/* SUGGESTIONS */
+.suggestion-item{display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;transition:border-color .2s,transform .15s}
+.suggestion-item:last-child{margin-bottom:0}
+.suggestion-item:hover{border-color:var(--accent)}
+.suggestion-info{flex:1}
+.suggestion-info h4{font-size:13px;font-weight:700;color:var(--text)}
+.suggestion-info p{font-size:11px;color:var(--text3);font-family:var(--mono);margin-top:2px}
+.suggestion-go{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--rpill);font-size:12px;font-family:var(--sans);font-weight:700;cursor:pointer;border:1px solid rgba(185,242,60,.4);color:var(--accent);background:rgba(185,242,60,.08);transition:all .2s;white-space:nowrap}
+.suggestion-go:hover{background:var(--accent);color:#0a0a0b;box-shadow:0 0 12px rgba(185,242,60,.35);transform:translateX(2px)}
+@media(max-width:1024px){.bento-row{grid-template-columns:1fr}}
 
 /* BADGES */
-.vuln-badge{display:inline-block;font-size:10px;font-family:var(--mono);font-weight:600;padding:3px 8px;border-radius:4px;letter-spacing:1px;text-transform:uppercase}
-.vuln-critical{background:rgba(255,68,68,.2);color:var(--red);border:1px solid rgba(255,68,68,.4)}
-.vuln-high{background:rgba(255,140,0,.15);color:var(--orange);border:1px solid rgba(255,140,0,.4)}
-.vuln-medium{background:rgba(255,215,0,.15);color:var(--yellow);border:1px solid rgba(255,215,0,.4)}
-.vuln-low{background:rgba(0,212,255,.1);color:var(--accent);border:1px solid rgba(0,212,255,.3)}
-.vuln-info{background:rgba(122,156,196,.15);color:var(--text2);border:1px solid var(--border2)}
+.vuln-badge{display:inline-block;font-size:10px;font-family:var(--sans);font-weight:700;padding:4px 10px;border-radius:var(--rpill);letter-spacing:.3px;text-transform:uppercase}
+.vuln-critical{background:rgba(255,87,87,.18);color:var(--red);border:1px solid rgba(255,87,87,.4);box-shadow:0 0 8px rgba(255,87,87,.2)}
+.vuln-high{background:rgba(255,149,0,.15);color:var(--orange);border:1px solid rgba(255,149,0,.4);box-shadow:0 0 8px rgba(255,149,0,.18)}
+.vuln-medium{background:rgba(255,214,10,.15);color:var(--yellow);border:1px solid rgba(255,214,10,.4)}
+.vuln-low{background:rgba(185,242,60,.12);color:var(--accent);border:1px solid rgba(185,242,60,.3)}
+.vuln-info{background:var(--bg3);color:var(--text2);border:1px solid var(--border2)}
 
 /* TABLE */
-.result-table{width:100%;border-collapse:collapse;font-size:12px;font-family:var(--mono)}
-.result-table th{text-align:left;padding:8px 12px;font-size:10px;font-weight:600;letter-spacing:1px;color:var(--text3);text-transform:uppercase;border-bottom:1px solid var(--border)}
+.result-table{width:100%;border-collapse:collapse;font-size:12px;font-family:var(--sans)}
+.result-table th{text-align:left;padding:8px 12px;font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--text3);text-transform:uppercase;border-bottom:1px solid var(--border)}
 .result-table td{padding:9px 12px;border-bottom:1px solid var(--bg3);vertical-align:top}
 .result-table tr:hover td{background:var(--bg3)}
 
 /* REPORTS */
-.report-item{display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;transition:border-color .2s}
-.report-item:hover{border-color:var(--accent)}
-.report-icon{font-size:20px}
+.report-item{display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;transition:border-color .2s,transform .15s;box-shadow:var(--sh1)}
+.report-item:hover{border-color:var(--accent);transform:translateY(-1px)}
+.report-icon{width:36px;height:36px;border-radius:10px;background:rgba(185,242,60,.1);color:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .report-info{flex:1;cursor:pointer}
-.report-info h4{font-size:13px;font-weight:700}
+.report-info h4{font-size:13px;font-weight:700;font-family:var(--sans)}
 .report-info p{font-size:11px;color:var(--text2);font-family:var(--mono);margin-top:2px}
 .report-meta{font-size:11px;color:var(--text3);font-family:var(--mono);text-align:right;min-width:120px}
 
 /* CHECKBOX */
 .checkbox-group{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-.checkbox-item{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:var(--r);background:var(--bg3);border:1px solid var(--border);cursor:pointer;font-size:12px;font-family:var(--mono);transition:all .2s;user-select:none}
+.checkbox-item{display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:var(--rpill);background:var(--bg3);border:1px solid var(--border);cursor:pointer;font-size:12px;font-family:var(--sans);font-weight:600;transition:all .2s;user-select:none;box-shadow:var(--sh1)}
 .checkbox-item input{display:none}
-.checkbox-item.checked{background:var(--accent3);border-color:var(--accent);color:var(--accent)}
+.checkbox-item.checked{background:var(--accent3);border-color:var(--accent);color:var(--accent);box-shadow:0 0 10px rgba(185,242,60,.25)}
 
 /* ALERT */
-.alert{padding:12px 16px;border-radius:var(--r);font-size:12px;font-family:var(--mono);margin-bottom:16px;display:flex;align-items:flex-start;gap:10px}
-.alert-info{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);color:var(--accent)}
-.alert-warn{background:rgba(255,140,0,.08);border:1px solid rgba(255,140,0,.2);color:var(--orange)}
-.alert-success{background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);color:var(--green)}
-.alert-err{background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.2);color:var(--red)}
+.alert{padding:12px 16px;border-radius:var(--r);font-size:12px;font-family:var(--sans);margin-bottom:16px;display:flex;align-items:flex-start;gap:10px;border-left:3px solid;box-shadow:var(--sh1)}
+.alert-info{background:rgba(185,242,60,.08);border:1px solid rgba(185,242,60,.2);border-left-color:var(--accent);color:var(--accent)}
+.alert-warn{background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);border-left-color:var(--orange);color:var(--orange)}
+.alert-success{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-left-color:var(--green);color:var(--green)}
+.alert-err{background:rgba(255,87,87,.08);border:1px solid rgba(255,87,87,.2);border-left-color:var(--red);color:var(--red)}
 
 /* TOOL STATUS */
 .tool-status-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:12px}
-.tool-status-item{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg3);border-radius:var(--r);font-size:12px;font-family:var(--mono)}
+.tool-status-item{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);font-size:12px;font-family:var(--sans);font-weight:600;box-shadow:var(--sh1);transition:border-color .2s}
+.tool-status-item:hover{border-color:var(--border2)}
 
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.open{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:32px;max-width:800px;width:100%;max-height:88vh;overflow-y:auto;position:relative}
+.modal{background:var(--card-grad),var(--bg2);border:1px solid var(--border2);border-radius:var(--r2);padding:32px;max-width:800px;width:100%;max-height:88vh;overflow-y:auto;position:relative;box-shadow:var(--sh3)}
 .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text2);cursor:pointer;font-size:20px}
 
+/* DIALOG (alert/confirm/prompt stylisés — remplacent les boîtes natives du navigateur) */
+#ui-dialog-overlay{z-index:600}
+.ui-dialog{max-width:440px;padding:24px}
+.ui-dialog-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ui-dialog-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,.06);color:var(--accent)}
+.ui-dialog-icon.danger{background:rgba(255,70,70,.13);color:var(--red)}
+.ui-dialog-icon .icon{width:18px;height:18px}
+.ui-dialog-title{font-family:var(--sans);font-weight:700;font-size:15px;color:var(--text)}
+.ui-dialog-msg{font-size:13px;color:var(--text2);line-height:1.55;white-space:pre-wrap;word-break:break-word;margin-bottom:18px}
+.ui-dialog-input{width:100%;margin:-4px 0 18px;padding:10px 12px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none}
+.ui-dialog-input:focus{border-color:var(--accent)}
+.ui-dialog-actions{display:flex;justify-content:flex-end;gap:10px}
+.btn-ghost{background:var(--bg2);color:var(--text2);border:1px solid var(--border2)}
+.btn-ghost:hover{color:var(--text);border-color:var(--accent)}
+
 /* DNS ROWS */
-.dns-section-header{font-size:11px;font-weight:700;color:var(--accent);font-family:var(--mono);letter-spacing:1.5px;text-transform:uppercase;padding:10px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;margin-top:12px}
+.dns-section-header{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--accent);font-family:var(--sans);letter-spacing:1px;text-transform:uppercase;padding:10px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;margin-top:12px}
 .dns-row{display:grid;grid-template-columns:220px 140px 1fr;gap:12px;padding:7px 8px;font-family:var(--mono);font-size:11px;border-bottom:1px solid var(--bg3);align-items:center}
 .dns-row:hover{background:var(--bg3);border-radius:4px}
 
 /* DL BTNS */
-.dl-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:var(--r);font-size:11px;font-family:var(--mono);font-weight:600;cursor:pointer;transition:all .2s;border:1px solid;text-decoration:none}
-.dl-html{border-color:rgba(0,212,255,.4);color:var(--accent);background:rgba(0,212,255,.08)}
-.dl-html:hover{background:var(--accent);color:var(--bg)}
-.dl-json{border-color:rgba(0,255,136,.4);color:var(--green);background:rgba(0,255,136,.08)}
-.dl-json:hover{background:var(--green2);color:#000}
-.dl-csv{border-color:rgba(255,215,0,.4);color:var(--yellow);background:rgba(255,215,0,.08)}
-.dl-csv:hover{background:var(--yellow);color:#000}
+.dl-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--rpill);font-size:11px;font-family:var(--sans);font-weight:700;cursor:pointer;transition:all .2s;border:1px solid;text-decoration:none}
+.dl-html{border-color:rgba(185,242,60,.4);color:var(--accent);background:rgba(185,242,60,.08)}
+.dl-html:hover{background:var(--accent);color:#0a0a0b;box-shadow:0 0 12px rgba(185,242,60,.35)}
+.dl-json{border-color:rgba(52,211,153,.4);color:var(--green);background:rgba(52,211,153,.08)}
+.dl-json:hover{background:var(--green2);color:#04130d;box-shadow:0 0 12px rgba(52,211,153,.3)}
+.dl-csv{border-color:rgba(255,214,10,.4);color:var(--yellow);background:rgba(255,214,10,.08)}
+.dl-csv:hover{background:var(--yellow);color:#1a1500;box-shadow:0 0 12px rgba(255,214,10,.3)}
 
 /* RECENT */
 .recent-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px}
@@ -188,25 +265,110 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 @keyframes spin{to{transform:rotate(360deg)}}
 .spinner{display:inline-block;width:12px;height:12px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
 
-@media(max-width:700px){.app-layout{grid-template-columns:1fr}.sidebar{display:none}}
+@keyframes fadeInOverlay{from{opacity:0}to{opacity:1}}
+@media(max-width:880px){
+  .app-layout{grid-template-columns:1fr}
+  .btn-hamburger{display:flex}
+  .sidebar{position:fixed;top:56px;left:0;bottom:0;width:268px;z-index:95;transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1)}
+  .sidebar.open{transform:translateX(0);box-shadow:var(--sh3)}
+  .sidebar-overlay.open{display:block;animation:fadeInOverlay .2s ease}
+  .main-content{padding:16px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .page-header h2{font-size:21px}
+  .card{padding:16px}
+  .topbar{padding:0 12px;gap:10px}
+  .sys-info{display:none}
+}
+
+/* ENTRANCE ANIMATION */
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.page.active>*{animation:cardIn .5s cubic-bezier(.16,1,.3,1) both}
+.page.active>*:nth-child(1){animation-delay:0s}
+.page.active>*:nth-child(2){animation-delay:.06s}
+.page.active>*:nth-child(3){animation-delay:.12s}
+.page.active>*:nth-child(4){animation-delay:.18s}
+.page.active>*:nth-child(5){animation-delay:.24s}
+.page.active>*:nth-child(n+6){animation-delay:.3s}
+.stats-grid .stat-card{animation:cardIn .5s cubic-bezier(.16,1,.3,1) both}
+.stats-grid .stat-card:nth-child(1){animation-delay:.04s}
+.stats-grid .stat-card:nth-child(2){animation-delay:.09s}
+.stats-grid .stat-card:nth-child(3){animation-delay:.14s}
+.stats-grid .stat-card:nth-child(4){animation-delay:.19s}
+.bento-side .card:nth-child(1){animation-delay:.16s}
+.bento-side .card:nth-child(2){animation-delay:.22s}
+@media (prefers-reduced-motion: reduce){
+  .page.active>*,.stats-grid .stat-card{animation:none}
+}
 
 </style>
 </head>
 <body>
 
+<!-- ICON SPRITE (inline, no CDN dependency - this tool may run in air-gapped pentest labs) -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L20 6 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V6 Z"/></symbol>
+  <symbol id="icon-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3 C9 6 9 18 12 21 C15 18 15 6 12 3 Z"/></symbol>
+  <symbol id="icon-radar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/><path d="M12 12 L18.5 5.5"/></symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 L16.65 16.65"/></symbol>
+  <symbol id="icon-shield-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L20 6 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V6 Z"/><path d="M12 8 L12 13"/><path d="M12 16.2 L12 16.3"/></symbol>
+  <symbol id="icon-crosshair" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 2 L12 6"/><path d="M12 18 L12 22"/><path d="M2 12 L6 12"/><path d="M18 12 L22 12"/></symbol>
+  <symbol id="icon-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5 L4 19 C4 20.66 7.58 22 12 22 C16.42 22 20 20.66 20 19 L20 5"/><path d="M4 12 C4 13.66 7.58 15 12 15 C16.42 15 20 13.66 20 12"/></symbol>
+  <symbol id="icon-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="15" r="4"/><path d="M10.5 11.5 L20 2"/><path d="M16 6 L19 9"/></symbol>
+  <symbol id="icon-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 L4 14 H11 L9 22 L20 10 H13 Z"/></symbol>
+  <symbol id="icon-file-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2 H6 C5 2 4 3 4 4 V20 C4 21 5 22 6 22 H18 C19 22 20 21 20 20 V8 Z"/><path d="M14 2 V8 H20"/><path d="M8 13 H16"/><path d="M8 17 H16"/></symbol>
+  <symbol id="icon-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></symbol>
+  <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 014-4h6a4 4 0 014 4v2"/><circle cx="17" cy="7" r="3"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></symbol>
+  <symbol id="icon-clipboard-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="18" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 12 H10"/><path d="M12 12 H15"/><path d="M9 16 H10"/><path d="M12 16 H15"/></symbol>
+  <symbol id="icon-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4 H20"/><circle cx="14" cy="4" r="2"/><path d="M4 12 H20"/><circle cx="8" cy="12" r="2"/><path d="M4 20 H20"/><circle cx="16" cy="20" r="2"/></symbol>
+  <symbol id="icon-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L12 21"/><path d="M5 7 H19"/><path d="M2 17 H20"/><path d="M5 7 L2 14 H8 Z"/><path d="M19 7 L16 14 H22 Z"/></symbol>
+  <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 V20 a8 8 0 0116 0 V21"/></symbol>
+  <symbol id="icon-log-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21 H5 a2 2 0 01-2-2 V5 a2 2 0 012-2 H9"/><path d="M16 17 L21 12 L16 7"/><path d="M21 12 H9"/></symbol>
+  <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+  <symbol id="icon-trending-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/></symbol>
+  <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7 V12 L16 14"/></symbol>
+  <symbol id="icon-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></symbol>
+  <symbol id="icon-alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L22 20 H2 Z"/><path d="M12 9 V13"/><path d="M12 16.5 V16.6"/></symbol>
+  <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6 H21"/><path d="M3 12 H21"/><path d="M3 18 H21"/></symbol>
+  <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L18 18"/><path d="M18 6 L6 18"/></symbol>
+  <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15.5 6.4M3 12a9 9 0 0 1 15.5-6.4"/><polyline points="21,3 21,9 15,9"/><polyline points="3,21 3,15 9,15"/></symbol>
+  <symbol id="icon-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18 L3 21 V6 L9 3 L15 6 L21 3 V18 L15 21 L9 18 Z"/><path d="M9 3 V18"/><path d="M15 6 V21"/></symbol>
+  <symbol id="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7 a2 2 0 012-2 h4 l2 2 h7 a2 2 0 012 2 v9 a2 2 0 01-2 2 H5 a2 2 0 01-2-2 Z"/></symbol>
+  <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11 V7 a4 4 0 018 0 V11"/></symbol>
+  <symbol id="icon-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 21 H16"/><path d="M12 16 V21"/></symbol>
+  <symbol id="icon-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 V15"/><path d="M7 8 L12 3 L17 8"/><path d="M3 17 V19 a2 2 0 002 2 H19 a2 2 0 002-2 V17"/></symbol>
+  <symbol id="icon-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3 H16 L19 6 V19 a2 2 0 01-2 2 H5 a2 2 0 01-2-2 V5 a2 2 0 012-2 Z"/><path d="M8 3 V8 H15 V3"/><path d="M7 21 V14 H17 V21"/></symbol>
+  <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5 V19"/><path d="M5 12 H19"/></symbol>
+  <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11 V16"/><path d="M12 8 V8.1"/></symbol>
+  <symbol id="icon-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 7 H6.01"/><path d="M6 17 H6.01"/></symbol>
+  <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6 L12 13 L22 6"/></symbol>
+  <symbol id="icon-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9 H19"/><path d="M5 15 H19"/><path d="M9 4 L7 20"/><path d="M16 4 L14 20"/></symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13 L9.5 17.5 L19 7"/></symbol>
+  <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6 H21"/><path d="M8 6 V4 a2 2 0 012-2 h4 a2 2 0 012 2 V6"/><path d="M19 6 L18 20 a2 2 0 01-2 2 H8 a2 2 0 01-2-2 L5 6"/></symbol>
+  <symbol id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12 C1 12 5 4 12 4 C19 4 23 12 23 12 C23 12 19 20 12 20 C5 20 1 12 1 12 Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="icon-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18 H21"/><path d="M3 18 L2 8 L8 12 L12 5 L16 12 L22 8 L21 18 Z"/></symbol>
+  <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 V15"/><path d="M7 10 L12 15 L17 10"/><path d="M3 17 V19 a2 2 0 002 2 H19 a2 2 0 002-2 V17"/></symbol>
+  <symbol id="icon-ban" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.5 5.5 L18.5 18.5"/></symbol>
+  <symbol id="icon-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12 H5"/><path d="M11 18 L5 12 L11 6"/></symbol>
+  <symbol id="icon-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18 H15"/><path d="M10 21 H14"/><path d="M12 3 a6 6 0 00-3 11.2 c.6.4 1 1 1 1.8 H14 c0-.8.4-1.4 1-1.8 A6 6 0 0012 3 Z"/></symbol>
+  <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 H19"/><path d="M13 6 L19 12 L13 18"/></symbol>
+</svg>
+
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">
-      <div class="logo-icon">🛡</div>
+      <div class="logo-icon"><svg class="icon" style="width:22px;height:22px"><use href="#icon-shield"/></svg></div>
       <h1>Pen<span>Toolbox</span></h1>
     </div>
-    <div class="login-sub">// Plateforme de Pentest v4.0</div>
-    <div class="login-err" id="login-error">⚠ Identifiants incorrects</div>
+    <div class="login-sub">// Bienvenue. Connectez-vous pour continuer.</div>
+    <div class="login-err" id="login-error"><svg class="icon" style="width:14px;height:14px;flex-shrink:0"><use href="#icon-alert-triangle"/></svg><span id="login-error-text">Identifiants incorrects</span></div>
     <div class="fg"><label>Identifiant</label><input type="text" id="username" placeholder="admin" autocomplete="username"/></div>
     <div class="fg"><label>Mot de passe</label><input type="password" id="password" placeholder="••••••••" autocomplete="current-password"/></div>
     <button class="btn-login" id="login-btn" onclick="doLogin()">ACCÉDER À LA PLATEFORME</button>
-    <div class="login-hint">Défaut : admin / pentest2025</div>
   </div>
 </div>
 
@@ -215,57 +377,82 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 <div class="app-layout">
 
   <header class="topbar">
-    <div class="topbar-logo">🛡 Pen<span>Toolbox</span></div>
+    <button class="btn-hamburger" id="btn-hamburger" onclick="toggleSidebar()" aria-label="Menu"><svg class="icon"><use href="#icon-menu"/></svg></button>
+    <div class="topbar-logo"><svg class="icon" style="width:19px;height:19px"><use href="#icon-shield"/></svg> Pen<span>Toolbox</span></div>
     <div class="topbar-badge">v4.0</div>
     <div class="topbar-spacer"></div>
     <div class="sys-info" id="sys-info"></div>
     <div class="status-dot" style="margin-left:8px"></div>
-    <div class="topbar-user" id="user-display">👤 admin</div>
-    <button class="btn-logout" onclick="doLogout()">Déconnexion</button>
+    <div class="topbar-user" id="user-display"><svg class="icon" style="width:14px;height:14px"><use href="#icon-user"/></svg> <span id="user-display-name">admin</span></div>
+    <button class="btn-logout" onclick="doLogout()"><svg class="icon" style="width:14px;height:14px"><use href="#icon-log-out"/></svg> Déconnexion</button>
   </header>
 
-  <nav class="sidebar">
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <nav class="sidebar" id="sidebar">
     <div class="sidebar-section">
       <div class="sidebar-section-title">Dashboard</div>
       <div class="nav-item active" onclick="showPage('dashboard',this)">
-        <span class="nav-icon">📊</span> Dashboard
+        <svg class="nav-icon"><use href="#icon-grid"/></svg> Dashboard
       </div>
     </div>
 
     <div class="sidebar-section">
-      <div class="sidebar-section-title">Reconnaissance</div>
+      <div class="sidebar-section-title">Recon. Passive</div>
       <div class="nav-item" onclick="showPage('dnsdumpster',this)">
-        <span class="nav-icon">🌐</span> DNSDumpster
+        <svg class="nav-icon"><use href="#icon-globe"/></svg> DNSDumpster
       </div>
-      <div class="nav-item" onclick="showPage('arp',this)">
-        <span class="nav-icon">📡</span> ARP Scan
+      <div class="nav-item" onclick="showPage('recon',this)">
+        <svg class="nav-icon"><use href="#icon-search"/></svg> Dnsrecon
       </div>
     </div>
 
     <div class="sidebar-section">
-      <div class="sidebar-section-title">Scan</div>
+      <div class="sidebar-section-title">Recon. Active</div>
+      <div class="nav-item" onclick="showPage('enum4linux',this)">
+        <svg class="nav-icon"><use href="#icon-server"/></svg> Énumération SMB
+      </div>
       <div class="nav-item" onclick="showPage('nmap',this)">
-        <span class="nav-icon">🔍</span> Nmap <span class="nav-badge">RÉEL</span>
-      </div>
-      <div class="nav-item" onclick="showPage('nikto',this)">
-        <span class="nav-icon">🌐</span> Nikto
-      </div>
-      <div class="nav-item" onclick="showPage('sqlmap',this)">
-        <span class="nav-icon">💉</span> SQLMap
+        <svg class="nav-icon"><use href="#icon-search"/></svg> Nmap
       </div>
     </div>
 
     <div class="sidebar-section">
       <div class="sidebar-section-title">Exploitation</div>
+      <div class="nav-item" onclick="showPage('nikto',this)">
+        <svg class="nav-icon"><use href="#icon-globe"/></svg> Nikto
+      </div>
+      <div class="nav-item" onclick="showPage('openvas',this)">
+        <svg class="nav-icon"><use href="#icon-shield-alert"/></svg> OpenVAS
+      </div>
+      <div class="nav-item" onclick="showPage('msf',this)">
+        <svg class="nav-icon"><use href="#icon-crosshair"/></svg> Metasploit
+      </div>
+      <div class="nav-item" onclick="showPage('sqlmap',this)">
+        <svg class="nav-icon"><use href="#icon-database"/></svg> SQLMap
+      </div>
+      <div class="nav-item" onclick="showPage('hydra',this)">
+        <svg class="nav-icon"><use href="#icon-key"/></svg> Hydra
+      </div>
       <div class="nav-item" onclick="showPage('exploit',this)">
-        <span class="nav-icon">⚡</span> Exploitation
+        <svg class="nav-icon"><use href="#icon-zap"/></svg> Exploitation auto
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Post-Exploitation</div>
+      <div class="nav-item" onclick="showPage('cracking',this);loadJohnWordlists()">
+        <svg class="nav-icon"><use href="#icon-hash"/></svg> Cracking
+      </div>
+      <div class="nav-item" onclick="showPage('sessions',this);loadSessions()">
+        <svg class="nav-icon"><use href="#icon-monitor"/></svg> Sessions
+        <span class="nav-badge" id="sessions-badge" style="display:none">0</span>
       </div>
     </div>
 
     <div class="sidebar-section">
       <div class="sidebar-section-title">Rapports</div>
       <div class="nav-item" onclick="showPage('reports',this);loadReports()">
-        <span class="nav-icon">📄</span> Rapports
+        <svg class="nav-icon"><use href="#icon-file-text"/></svg> Rapports
         <span class="nav-badge" id="reports-badge" style="display:none">0</span>
       </div>
     </div>
@@ -273,16 +460,20 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
     <div class="sidebar-section">
       <div class="sidebar-section-title">Système</div>
       <div class="nav-item" onclick="showPage('tools',this);loadTools()">
-        <span class="nav-icon">⚙</span> Outils
+        <svg class="nav-icon"><use href="#icon-wrench"/></svg> Outils
+      </div>
+      <div class="nav-item" onclick="showPage('users',this);loadUsers()">
+        <svg class="nav-icon"><use href="#icon-users"/></svg> Utilisateurs
+      </div>
+      <div class="nav-item" onclick="showPage('audit',this);loadAuditLog()">
+        <svg class="nav-icon"><use href="#icon-clipboard-list"/></svg> Audit logs
+      </div>
+      <div class="nav-item" onclick="showPage('settings',this);loadSettings()">
+        <svg class="nav-icon"><use href="#icon-sliders"/></svg> Paramètres
       </div>
       <div class="nav-item" onclick="showPage('about',this)">
-        <span class="nav-icon">⚖</span> À propos & Légal
+        <svg class="nav-icon"><use href="#icon-scale"/></svg> À propos & Légal
       </div>
-    </div>
-
-    <div class="sidebar-section" style="margin-top:auto;padding-top:16px;border-top:1px solid var(--border)">
-      <div class="sidebar-section-title">Outils installés</div>
-      <div id="sidebar-tools" style="font-size:11px;font-family:var(--mono);color:var(--text3)">—</div>
     </div>
   </nav>
 
@@ -292,71 +483,169 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
     <div class="page active" id="page-dashboard">
       <div class="page-header">
         <div><h2>Tableau de bord</h2><p>Vue d'ensemble de votre activité pentest</p></div>
+        <button class="btn btn-ghost" onclick="clearDashboardStats()" title="Réinitialise vos statistiques d'activité"><svg class="icon" style="width:14px;height:14px"><use href="#icon-trash"/></svg> Effacer les statistiques</button>
       </div>
+
       <div class="stats-grid">
-        <div class="stat-card danger"><div class="stat-value" id="dash-vulns">0</div><div class="stat-label">Vulnérabilités</div></div>
-        <div class="stat-card info"><div class="stat-value" id="dash-scans">0</div><div class="stat-label">Scans lancés</div></div>
-        <div class="stat-card success"><div class="stat-value" id="dash-reports">0</div><div class="stat-label">Rapports</div></div>
-        <div class="stat-card warning"><div class="stat-value" id="dash-hosts">0</div><div class="stat-label">Hôtes découverts</div></div>
-      </div>
-      <div class="card">
-        <div class="card-title">⚡ Activité récente</div>
-        <div id="recent-activity">
-          <div class="recent-item">
-            <div class="ri-dot" style="background:var(--text3)"></div>
-            <div style="color:var(--text3);font-family:var(--mono);font-size:12px">Aucune activité — lancez votre premier scan</div>
-          </div>
+        <div class="stat-card danger">
+          <div class="stat-icon"><svg class="icon"><use href="#icon-alert-triangle"/></svg></div>
+          <div class="stat-value" id="dash-vulns">0</div><div class="stat-label">Vulnérabilités</div>
+        </div>
+        <div class="stat-card info">
+          <div class="stat-icon"><svg class="icon"><use href="#icon-search"/></svg></div>
+          <div class="stat-value" id="dash-scans">0</div><div class="stat-label">Scans lancés</div>
+        </div>
+        <div class="stat-card success">
+          <div class="stat-icon"><svg class="icon"><use href="#icon-file-text"/></svg></div>
+          <div class="stat-value" id="dash-reports">0</div><div class="stat-label">Rapports</div>
+        </div>
+        <div class="stat-card warning">
+          <div class="stat-icon"><svg class="icon"><use href="#icon-radar"/></svg></div>
+          <div class="stat-value" id="dash-hosts">0</div><div class="stat-label">Hôtes découverts</div>
         </div>
       </div>
-      <div class="alert alert-warn">
-        ⚠ <div><strong>Légal :</strong> Utilisez uniquement sur des systèmes pour lesquels vous avez une autorisation écrite.</div>
+
+      <div class="bento-row">
+
+        <!-- Courbe activité (hero) -->
+        <div class="card bento-hero">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div class="card-title" style="margin-bottom:0"><svg class="icon" style="width:15px;height:15px"><use href="#icon-trending-up"/></svg> Activité des scans</div>
+            <span class="live-badge"><span class="status-dot" style="width:6px;height:6px;background:var(--accent)"></span> Temps réel</span>
+          </div>
+          <div class="chart-box" style="position:relative;width:100%;height:240px">
+            <canvas id="activity-chart"></canvas>
+          </div>
+          <div id="no-activity-msg" style="text-align:center;color:var(--text3);font-family:var(--sans);font-size:12px;padding:48px 20px">
+            Aucune activité — lancez votre premier scan
+          </div>
+        </div>
+
+        <div class="bento-side">
+          <!-- Camembert vulnérabilités -->
+          <div class="card">
+            <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-target"/></svg> Vulnérabilités par sévérité</div>
+            <div style="display:flex;align-items:center;gap:20px;justify-content:center;padding:6px 0">
+              <div style="position:relative;width:130px;height:130px"><canvas id="vuln-chart"></canvas></div>
+              <div id="vuln-legend" style="font-family:var(--sans);font-size:12px;display:flex;flex-direction:column;gap:8px">
+                <div><span style="display:inline-block;width:10px;height:10px;background:#ff5757;border-radius:3px;margin-right:6px"></span>Critique: <span id="leg-crit">0</span></div>
+                <div><span style="display:inline-block;width:10px;height:10px;background:#ff9500;border-radius:3px;margin-right:6px"></span>Élevé: <span id="leg-high">0</span></div>
+                <div><span style="display:inline-block;width:10px;height:10px;background:#ffd60a;border-radius:3px;margin-right:6px"></span>Moyen: <span id="leg-med">0</span></div>
+                <div><span style="display:inline-block;width:10px;height:10px;background:#b9f23c;border-radius:3px;margin-right:6px"></span>Faible: <span id="leg-low">0</span></div>
+              </div>
+            </div>
+            <div id="no-vulns-msg" style="text-align:center;color:var(--text3);font-family:var(--sans);font-size:12px;padding:16px">
+              Aucune vulnérabilité — lancez une exploitation
+            </div>
+          </div>
+
+          <!-- Activité récente -->
+          <div class="card" style="flex:1">
+            <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-activity"/></svg> Activité récente</div>
+            <div id="recent-activity">
+              <div class="recent-item">
+                <div class="ri-dot" style="background:var(--text3)"></div>
+                <div style="color:var(--text3);font-family:var(--sans);font-size:12px">Aucune activité — lancez votre premier scan</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      <!-- KPIs temps d'exécution -->
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-clock"/></svg> KPIs — Temps d'exécution des scans</div>
+        <div id="kpi-table">
+          <div style="color:var(--text3);font-family:var(--sans);font-size:12px">Aucun scan effectué pour l'instant.</div>
+        </div>
+      </div>
+
+      <div class="alert alert-warn"><svg class="icon" style="width:16px;height:16px;flex-shrink:0"><use href="#icon-alert-triangle"/></svg> <div><strong>Légal :</strong> Utilisez uniquement sur des systèmes pour lesquels vous avez une autorisation écrite.</div></div>
     </div>
 
-    <!-- DNS DUMPSTER -->
+        <!-- DNS DUMPSTER -->
     <div class="page" id="page-dnsdumpster">
       <div class="page-header">
-        <div><h2>🌐 DNSDumpster</h2><p>Cartographie DNS réelle — sous-domaines, MX, NS, TXT</p></div>
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-globe"/></svg> DNSDumpster</h2><p>Cartographie DNS réelle — sous-domaines, MX, NS, TXT</p></div>
       </div>
-      <div class="alert alert-success">✓ <div>Données <strong>100% réelles</strong> via dig, nslookup et Python socket.</div></div>
+
       <div class="card">
-        <div class="card-title">🔧 Paramètres</div>
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Paramètres</div>
         <div class="tool-row">
           <div class="field"><label>Domaine cible</label><input type="text" id="dumpster-target" placeholder="darty.fr, google.com..."/></div>
-          <button class="btn btn-primary" onclick="runDNSDumpster()" id="dumpster-btn">🔍 Analyser</button>
+          <button class="btn btn-primary" onclick="runDNSDumpster()" id="dumpster-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-search"/></svg> Analyser</button>
         </div>
         <div class="progress-bar" id="dumpster-pb"><div class="progress-fill" id="dumpster-fill"></div></div>
         <div class="terminal" id="dumpster-out"><span class="terminal-ph">> En attente...</span></div>
       </div>
       <div class="card" id="dumpster-results-card" style="display:none">
-        <div class="card-title">🗺 Infrastructure DNS</div>
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-map"/></svg> Infrastructure DNS</div>
         <div id="dumpster-structured"></div>
       </div>
     </div>
 
-    <!-- ARP SCAN -->
-    <div class="page" id="page-arp">
+    <!-- RECON PASSIVE (dnsrecon — DNS + Certificate Transparency) -->
+    <div class="page" id="page-recon">
       <div class="page-header">
-        <div><h2>📡 ARP Scan</h2><p>Découverte d'hôtes réseau locaux</p></div>
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-search"/></svg> Reconnaissance passive</h2><p>dnsrecon — sous-domaines (Certificate Transparency), enregistrements DNS, emails. 100&nbsp;% passif : aucun paquet vers la cible.</p></div>
+      </div>
+      <div class="alert alert-info"><svg class="icon" style="width:16px;height:16px;flex-shrink:0"><use href="#icon-info"/></svg> <div>Footprinting passif via sources publiques (crt.sh, DNS). Saisissez un <strong>nom de domaine</strong> (pas une IP).</div></div>
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Paramètres</div>
+        <div class="tool-row">
+          <div class="field"><label>Domaine cible</label><input type="text" id="recon-target" placeholder="anthropic.com, exemple.fr..."/></div>
+          <button class="btn btn-primary" onclick="runRecon()" id="recon-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-search"/></svg> Lancer la recon</button>
+        </div>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;margin:6px 2px 2px">
+          <label class="check-inline"><input type="checkbox" id="recon-std" checked> Enregistrements DNS (A/NS/MX/TXT/SOA/SRV)</label>
+          <label class="check-inline"><input type="checkbox" id="recon-crt" checked> Sous-domaines (Certificate Transparency)</label>
+          <label class="check-inline"><input type="checkbox" id="recon-axfr"> Transfert de zone (AXFR)</label>
+        </div>
+        <div class="progress-bar" id="recon-pb"><div class="progress-fill" id="recon-fill"></div></div>
+        <div class="terminal" id="recon-out"><span class="terminal-ph">> En attente...</span></div>
+      </div>
+      <div class="card" id="recon-results-card" style="display:none">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-map"/></svg> Résultats OSINT</div>
+        <div id="recon-structured"></div>
+      </div>
+    </div>
+
+    <!-- ÉNUMÉRATION SMB (enum4linux-ng) -->
+    <div class="page" id="page-enum4linux">
+      <div class="page-header">
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-server"/></svg> Énumération SMB / NetBIOS</h2><p>enum4linux-ng — partages, utilisateurs, groupes, politique, OS, dialecte/signature SMB</p></div>
       </div>
       <div class="card">
-        <div class="card-title">🔧 Paramètres</div>
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Paramètres</div>
         <div class="tool-row">
-          <div class="field"><label>Plage CIDR</label><input type="text" id="arp-range" placeholder="192.168.1.0/24"/></div>
-          <button class="btn btn-primary" onclick="runARP()">Scanner réseau</button>
+          <div class="field"><label>Cible (IP ou hôte)</label><input type="text" id="enum-target" placeholder="192.168.56.109"/></div>
+          <div class="field" style="max-width:220px">
+            <label>Type d'énumération</label>
+            <select id="enum-mode">
+              <option value="all">Complète (-A)</option>
+              <option value="shares">Partages (-S)</option>
+              <option value="users">Utilisateurs & groupes (-U -G)</option>
+              <option value="os">OS & politique (-O -P)</option>
+            </select>
+          </div>
+          <div class="field" style="max-width:160px"><label>Utilisateur (option.)</label><input type="text" id="enum-username" placeholder="anonyme si vide"/></div>
+          <div class="field" style="max-width:160px"><label>Mot de passe (option.)</label><input type="password" id="enum-password" placeholder=""/></div>
+          <button class="btn btn-primary" onclick="runEnum4linux()" id="enum-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-server"/></svg> Énumérer</button>
         </div>
-        <div class="terminal" id="arp-out"><span class="terminal-ph">> En attente...</span></div>
+        <div class="progress-bar" id="enum-pb"><div class="progress-fill" id="enum-fill"></div></div>
+        <div class="terminal" id="enum-out"><span class="terminal-ph">> En attente... (nécessite enum4linux-ng + smbclient)</span></div>
       </div>
     </div>
 
     <!-- NMAP -->
     <div class="page" id="page-nmap">
       <div class="page-header">
-        <div><h2>🔍 Nmap — Scan de ports</h2><p>Scan réel via Nmap local ou Docker</p></div>
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-search"/></svg> Nmap — Scan de ports</h2><p>Scan de ports, services et vulnérabilités réseau</p></div>
       </div>
-      <div class="alert alert-success">✓ <div>Nmap s'exécute localement — résultats authentiques.</div></div>
+
       <div class="card">
-        <div class="card-title">🔧 Paramètres</div>
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Paramètres</div>
         <div class="tool-row">
           <div class="field"><label>Cible (IP ou domaine)</label><input type="text" id="nmap-target" placeholder="scanme.nmap.org, 192.168.1.1..."/></div>
           <div class="field" style="max-width:220px">
@@ -370,41 +659,127 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
               <option value="stealth">Furtif (-sS -T2)</option>
             </select>
           </div>
-          <button class="btn btn-primary" onclick="runNmap()" id="nmap-btn">Lancer Nmap</button>
+          <button class="btn btn-primary" onclick="runNmap()" id="nmap-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-search"/></svg> Lancer Nmap</button>
+          <button class="btn btn-danger" onclick="stopScan('nmap')" id="nmap-stop-btn" style="display:none"><svg class="icon" style="width:14px;height:14px"><use href="#icon-x"/></svg> Arrêter</button>
         </div>
         <div class="progress-bar" id="nmap-pb"><div class="progress-fill" id="nmap-fill"></div></div>
         <div class="terminal" id="nmap-out"><span class="terminal-ph">> En attente... Cible test : scanme.nmap.org</span></div>
+      </div>
+      <div class="card" id="nmap-suggestions-card" style="display:none">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-lightbulb"/></svg> Suggestions</div>
+        <div id="nmap-suggestions"></div>
       </div>
     </div>
 
     <!-- NIKTO -->
     <div class="page" id="page-nikto">
       <div class="page-header">
-        <div><h2>🌐 Nikto — Scan Web</h2><p>Audit de serveur web</p></div>
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-globe"/></svg> Nikto — Scan Web</h2><p>Audit de serveur web</p></div>
       </div>
       <div class="card">
-        <div class="card-title">🔧 Paramètres</div>
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Paramètres</div>
         <div class="tool-row">
-          <div class="field"><label>Cible (URL ou IP)</label><input type="text" id="nikto-target" placeholder="http://192.168.1.1 ou exemple.com"/></div>
-          <button class="btn btn-primary" onclick="runNikto()" id="nikto-btn">Lancer Nikto</button>
+          <div class="field"><label>Cible (URL ou IP)</label><input type="text" id="nikto-target" placeholder="http://192.168.1.84:1280 ou vspc01:1280"/></div>
+          <div class="field" style="max-width:220px"><label>Hostname:IP (si hostname)</label><input type="text" id="nikto-host" placeholder="vspc01:192.168.1.84"/></div>
+          <button class="btn btn-primary" onclick="runNikto()" id="nikto-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-globe"/></svg> Lancer Nikto</button>
+          <button class="btn btn-danger" onclick="stopScan('nikto')" id="nikto-stop-btn" style="display:none"><svg class="icon" style="width:14px;height:14px"><use href="#icon-x"/></svg> Arrêter</button>
         </div>
         <div class="progress-bar" id="nikto-pb"><div class="progress-fill" id="nikto-fill"></div></div>
-        <div class="terminal" id="nikto-out"><span class="terminal-ph">> En attente... (nécessite nikto)</span></div>
+        <div class="terminal" id="nikto-out"><span class="terminal-ph">> En attente... Exemples : http://192.168.1.1 ou https://vspc01:1280</span></div>
+      </div>
+      <div class="card" id="nikto-suggestions-card" style="display:none">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-lightbulb"/></svg> Suggestions</div>
+        <div id="nikto-suggestions"></div>
+      </div>
+    </div>
+
+    <!-- OPENVAS -->
+    <div class="page" id="page-openvas">
+      <div class="page-header">
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-shield-alert"/></svg> OpenVAS — Scan de vulnérabilités</h2><p>Scan complet via le moteur GVM (Greenbone)</p></div>
+      </div>
+      <div class="alert alert-warn"><svg class="icon" style="width:16px;height:16px;flex-shrink:0"><use href="#icon-alert-triangle"/></svg> <div>Un scan complet peut durer de quelques minutes à plusieurs heures selon la cible. La page reste utilisable pendant ce temps.</div></div>
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Paramètres</div>
+        <div class="tool-row">
+          <div class="field"><label>Cible (IP)</label><input type="text" id="openvas-target" placeholder="192.168.1.10"/></div>
+          <div class="field"><label>Liste de ports</label>
+            <select id="openvas-portlist" onchange="onOpenVASPortlistChange()">
+              <option value="">Chargement…</option>
+            </select>
+          </div>
+          <div class="field" id="openvas-custom-field" style="display:none"><label>Plage custom</label><input type="text" id="openvas-custom-ports" placeholder="T:1-1000 ou 80,443,8080"/></div>
+          <button class="btn btn-primary" onclick="runOpenVAS()" id="openvas-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-shield-alert"/></svg> Lancer OpenVAS</button>
+          <button class="btn btn-danger" onclick="stopScan('openvas')" id="openvas-stop-btn" style="display:none"><svg class="icon" style="width:14px;height:14px"><use href="#icon-x"/></svg> Arrêter</button>
+        </div>
+        <div id="openvas-status" style="display:none;margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--text2)">
+          <span class="spinner"></span> <span id="openvas-status-text">Scan en cours... (cela peut prendre du temps)</span>
+        </div>
+        <div class="terminal" id="openvas-out"><span class="terminal-ph">> En attente... Exemple : 192.168.1.10</span></div>
+      </div>
+      <div class="card" id="openvas-results-card" style="display:none">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-clipboard-list"/></svg> Résultats</div>
+        <div id="openvas-table"></div>
+      </div>
+    </div>
+
+    <!-- METASPLOIT -->
+    <div class="page" id="page-msf">
+      <div class="page-header">
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-crosshair"/></svg> Metasploit</h2><p>Scan/recon et exploits whitelistés via msfrpcd</p></div>
+      </div>
+      <div class="alert alert-warn"><svg class="icon" style="width:16px;height:16px;flex-shrink:0"><use href="#icon-alert-triangle"/></svg> <div>L'exécution d'exploits est strictement restreinte aux sous-réseaux autorisés (Labo) par le backend. Voir <strong>Paramètres</strong> pour configurer le périmètre.</div></div>
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Paramètres</div>
+        <div class="tool-row">
+          <div class="field"><label>Cible (IP)</label><input type="text" id="msf-target" placeholder="192.168.1.10"/></div>
+          <div class="field" style="max-width:300px"><label>Module</label><select id="msf-module" onchange="onMsfModuleChange()"></select></div>
+          <button class="btn btn-primary" onclick="runMSF()" id="msf-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-crosshair"/></svg> Lancer</button>
+        </div>
+        <div id="msf-options" class="tool-row" style="margin-top:6px"></div>
+        <div id="msf-status" style="display:none;margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--text2)">
+          <span class="spinner"></span> <span id="msf-status-text">Scan en cours...</span>
+        </div>
+        <div class="terminal" id="msf-out"><span class="terminal-ph">> En attente... Exemple : 192.168.1.10</span></div>
       </div>
     </div>
 
     <!-- SQLMAP -->
     <div class="page" id="page-sqlmap">
       <div class="page-header">
-        <div><h2>💉 SQLMap — Injection SQL</h2><p>Détection et exploitation d'injections SQL</p></div>
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-database"/></svg> SQLMap — Injection SQL</h2><p>Détection et exploitation d'injections SQL</p></div>
       </div>
-      <div class="alert alert-warn">⚠ <div>Utilisez uniquement sur des cibles autorisées.</div></div>
+      <div class="alert alert-warn"><svg class="icon" style="width:16px;height:16px;flex-shrink:0"><use href="#icon-alert-triangle"/></svg> <div>Utilisez uniquement sur des cibles autorisées.</div></div>
       <div class="card">
-        <div class="card-title">🔧 Paramètres</div>
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Paramètres</div>
         <div class="tool-row">
           <div class="field"><label>URL cible (avec paramètre)</label><input type="text" id="sqlmap-target" placeholder="http://exemple.com/page.php?id=1"/></div>
-          <button class="btn btn-danger" onclick="runSQLMap()" id="sqlmap-btn">Lancer SQLMap</button>
+          <div class="field" style="max-width:200px">
+            <label>Technique</label>
+            <select id="sqlmap-technique">
+              <option value="">Auto (toutes)</option>
+              <option value="B">Boolean-based blind (B)</option>
+              <option value="T">Time-based blind (T)</option>
+              <option value="E">Error-based (E)</option>
+              <option value="U">UNION query (U)</option>
+              <option value="S">Stacked queries (S)</option>
+            </select>
+          </div>
+          <div class="field" style="max-width:90px"><label>Level (1-5)</label><input type="number" id="sqlmap-level" min="1" max="5" value="1"/></div>
+          <div class="field" style="max-width:90px"><label>Risk (1-3)</label><input type="number" id="sqlmap-risk" min="1" max="3" value="1"/></div>
+          <div class="field" style="max-width:110px"><label>Crawl (0-5)</label><input type="number" id="sqlmap-crawl" min="0" max="5" value="0"/></div>
         </div>
+        <div class="tool-row" style="margin-top:6px;align-items:center;flex-wrap:wrap;gap:14px">
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer"><input type="checkbox" id="sqlmap-forms"> --forms</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer"><input type="checkbox" id="sqlmap-dbs"> --dbs</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer"><input type="checkbox" id="sqlmap-tables"> --tables</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;color:var(--red)"><input type="checkbox" id="sqlmap-dump"> --dump ⚠</label>
+          <div class="field" style="max-width:220px;margin:0"><label>Tamper (WAF bypass)</label><select id="sqlmap-tamper"></select></div>
+          <button class="btn btn-danger" onclick="runSQLMap()" id="sqlmap-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-database"/></svg> Lancer SQLMap</button>
+          <button class="btn btn-danger" onclick="stopScan('sqlmap')" id="sqlmap-stop-btn" style="display:none"><svg class="icon" style="width:14px;height:14px"><use href="#icon-x"/></svg> Arrêter</button>
+        </div>
+        <div id="sqlmap-dump-warn" style="display:none;margin-top:8px"><div class="alert alert-warn"><svg class="icon" style="width:15px;height:15px"><use href="#icon-alert-triangle"/></svg> <div><strong>--dump</strong> exfiltre le contenu des tables : action intrusive, à n'utiliser que sur cible explicitement autorisée.</div></div></div>
+        <div class="progress-bar" id="sqlmap-pb"><div class="progress-fill" id="sqlmap-fill"></div></div>
         <div class="terminal" id="sqlmap-out"><span class="terminal-ph">> En attente...</span></div>
       </div>
     </div>
@@ -412,34 +787,35 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
     <!-- EXPLOITATION -->
     <div class="page" id="page-exploit">
       <div class="page-header">
-        <div><h2>⚡ Exploitation automatisée</h2><p>Tests de vulnérabilités multi-modules</p></div>
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-zap"/></svg> Exploitation automatisée</h2><p>Tests de vulnérabilités multi-modules</p></div>
       </div>
-      <div class="alert alert-warn">⚠ <div>Utilisez uniquement sur des cibles avec autorisation écrite.</div></div>
+      <div class="alert alert-warn"><svg class="icon" style="width:16px;height:16px;flex-shrink:0"><use href="#icon-alert-triangle"/></svg> <div>Utilisez uniquement sur des cibles avec autorisation écrite.</div></div>
       <div class="card">
-        <div class="card-title">🎯 Cible</div>
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-target"/></svg> Cible</div>
         <div class="tool-row">
           <div class="field"><label>IP / Domaine</label><input type="text" id="exploit-target" placeholder="192.168.1.1 ou exemple.com"/></div>
         </div>
         <div style="margin-top:16px">
           <div class="card-title" style="margin-bottom:10px">Modules</div>
           <div class="checkbox-group" id="exploit-modules">
-            <label class="checkbox-item checked" onclick="toggleCheck(this)"><input type="checkbox" checked value="http"> 🌐 HTTP/HTTPS</label>
-            <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox" value="smb"> 📁 SMB (445)</label>
-            <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox" value="ftp"> 📤 FTP (21)</label>
-            <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox" value="ssh"> 🔐 SSH (22)</label>
-            <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox" value="mysql"> 🗄 MySQL (3306)</label>
-            <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox" value="rdp"> 🖥 RDP (3389)</label>
+            <label class="checkbox-item checked" onclick="toggleCheck(this, event)"><input type="checkbox" checked value="http"> <svg class="icon" style="width:13px;height:13px"><use href="#icon-globe"/></svg> HTTP/HTTPS</label>
+            <label class="checkbox-item" onclick="toggleCheck(this, event)"><input type="checkbox" value="smb"> <svg class="icon" style="width:13px;height:13px"><use href="#icon-folder"/></svg> SMB (445)</label>
+            <label class="checkbox-item" onclick="toggleCheck(this, event)"><input type="checkbox" value="ftp"> <svg class="icon" style="width:13px;height:13px"><use href="#icon-upload"/></svg> FTP (21)</label>
+            <label class="checkbox-item" onclick="toggleCheck(this, event)"><input type="checkbox" value="ssh"> <svg class="icon" style="width:13px;height:13px"><use href="#icon-lock"/></svg> SSH (22)</label>
+            <label class="checkbox-item" onclick="toggleCheck(this, event)"><input type="checkbox" value="mysql"> <svg class="icon" style="width:13px;height:13px"><use href="#icon-database"/></svg> MySQL (3306)</label>
+            <label class="checkbox-item" onclick="toggleCheck(this, event)"><input type="checkbox" value="rdp"> <svg class="icon" style="width:13px;height:13px"><use href="#icon-monitor"/></svg> RDP (3389)</label>
           </div>
         </div>
         <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn btn-danger" onclick="runExploit()" id="exploit-btn">⚡ Lancer l'exploitation</button>
-          <button class="btn btn-success" onclick="openGenReport()" id="gen-report-btn" style="display:none">📄 Générer rapport</button>
+          <button class="btn btn-danger" onclick="runExploit()" id="exploit-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-zap"/></svg> Lancer l'exploitation</button>
+          <button class="btn btn-danger" onclick="stopScan('exploit_auto')" id="exploit-stop-btn" style="display:none"><svg class="icon" style="width:14px;height:14px"><use href="#icon-x"/></svg> Arrêter</button>
+          <button class="btn btn-success" onclick="openGenReport()" id="gen-report-btn" style="display:none"><svg class="icon" style="width:14px;height:14px"><use href="#icon-file-text"/></svg> Générer rapport</button>
         </div>
         <div class="progress-bar" id="exploit-pb"><div class="progress-fill" id="exploit-fill"></div></div>
         <div class="terminal" id="exploit-out"><span class="terminal-ph">> Sélectionnez vos modules...</span></div>
       </div>
       <div class="card" id="exploit-results-card" style="display:none">
-        <div class="card-title">🎯 Vulnérabilités détectées</div>
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-target"/></svg> Vulnérabilités détectées</div>
         <div id="exploit-results-table"></div>
       </div>
     </div>
@@ -447,38 +823,269 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
     <!-- REPORTS -->
     <div class="page" id="page-reports">
       <div class="page-header">
-        <div><h2>📄 Rapports</h2><p>Consultation et téléchargement</p></div>
-        <button class="btn btn-primary" onclick="loadReports()">↻ Actualiser</button>
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-file-text"/></svg> Rapports</h2><p>Consultation et téléchargement</p></div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span id="reports-count-label" style="font-family:var(--mono);font-size:13px;color:var(--text2)">0 rapport</span>
+          <button class="btn btn-primary" onclick="loadReports()"><svg class="icon" style="width:14px;height:14px"><use href="#icon-refresh"/></svg> Actualiser</button>
+          <button class="btn btn-danger" onclick="deleteAllReports()"><svg class="icon" style="width:14px;height:14px"><use href="#icon-trash"/></svg> Supprimer tout</button>
+        </div>
       </div>
-      <div id="reports-container"><div class="alert alert-info">ℹ Chargement...</div></div>
+      <div class="card">
+        <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toggleAutoReportPanel(this)">
+          <span><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Rapports automatiques</span>
+          <span class="ar-chev" style="color:var(--text3)">▸</span>
+        </div>
+        <div id="autoreport-panel" style="display:none">
+          <p style="font-size:12px;color:var(--text2);margin:4px 0 12px">Génère un rapport automatiquement en fin de scan (si des résultats existent). Désactivez un outil pour ne plus créer de rapport auto pour celui-ci.</p>
+          <div id="autoreport-toggles" style="display:flex;flex-wrap:wrap;gap:10px 22px"></div>
+        </div>
+      </div>
+      <div id="reports-container"><div class="alert alert-info"><svg class="icon" style="width:15px;height:15px"><use href="#icon-info"/></svg> Chargement...</div></div>
     </div>
 
     <!-- TOOLS -->
     <div class="page" id="page-tools">
       <div class="page-header">
-        <div><h2>⚙ Outils & Statut</h2><p>Vérification des outils installés</p></div>
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-wrench"/></svg> Outils & Statut</h2><p>Vérification des outils installés</p></div>
       </div>
-      <div id="tools-content"><div class="alert alert-info">ℹ Chargement...</div></div>
+      <div id="tools-content"><div class="alert alert-info"><svg class="icon" style="width:15px;height:15px"><use href="#icon-info"/></svg> Chargement...</div></div>
     </div>
 
-    <!-- A PROPOS -->
+    <!-- USERS -->
+    <div class="page" id="page-users">
+      <div class="page-header">
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-users"/></svg> Gestion des utilisateurs</h2><p>Ajouter, supprimer, changer les mots de passe</p></div>
+      </div>
+      <div class="alert alert-warn"><svg class="icon" style="width:16px;height:16px"><use href="#icon-alert-triangle"/></svg> <div>Section réservée à l'administrateur. Toutes les actions sont auditées.</div></div>
+
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-plus"/></svg> Nouvel utilisateur</div>
+        <div class="tool-row">
+          <div class="field"><label>Identifiant</label><input type="text" id="new-user-name" placeholder="ex: analyste1" /></div>
+          <div class="field"><label>Mot de passe</label><input type="password" id="new-user-pass" placeholder="min 6 caractères" /></div>
+          <div class="field" style="max-width:140px">
+            <label>Rôle</label>
+            <select id="new-user-role">
+              <option value="analyst">Analyst</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="createUser()">Créer utilisateur</button>
+        </div>
+        <div id="user-create-msg" style="margin-top:10px;font-size:12px;font-family:var(--mono);display:none"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-user"/></svg> Changer mon mot de passe</div>
+        <div class="tool-row">
+          <div class="field"><label>Nouveau mot de passe</label><input type="password" id="my-new-pass" placeholder="min 6 caractères" /></div>
+          <button class="btn btn-warning" onclick="changeMyPassword()">Modifier</button>
+        </div>
+        <div id="pass-change-msg" style="margin-top:10px;font-size:12px;font-family:var(--mono);display:none"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-clipboard-list"/></svg> Utilisateurs existants</div>
+        <div id="users-list"><div class="alert alert-info"><svg class="icon" style="width:15px;height:15px"><use href="#icon-info"/></svg> Chargement...</div></div>
+        <button class="btn btn-primary" style="margin-top:12px" onclick="loadUsers()"><svg class="icon" style="width:14px;height:14px"><use href="#icon-refresh"/></svg> Actualiser</button>
+      </div>
+    </div>
+
+    <!-- AUDIT -->
+    <div class="page" id="page-audit">
+      <div class="page-header">
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-clipboard-list"/></svg> Logs d'audit</h2><p>Historique horodaté de toutes les actions</p></div>
+        <button class="btn btn-primary" onclick="loadAuditLog()"><svg class="icon" style="width:14px;height:14px"><use href="#icon-refresh"/></svg> Actualiser</button>
+      </div>
+      <div class="card">
+        <div class="terminal" id="audit-terminal" style="max-height:600px;min-height:300px">
+          <span class="terminal-ph">> Chargement des logs...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARAMETRES (admin uniquement, cf. applyRBAC()) -->
+    <div class="page" id="page-settings">
+      <div class="page-header">
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-sliders"/></svg> Paramètres</h2><p>Configuration applicative — modifiable à chaud, sans redémarrer le conteneur</p></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-crosshair"/></svg> Metasploit — Sous-réseaux de labo autorisés</div>
+        <div class="alert alert-warn"><svg class="icon" style="width:16px;height:16px"><use href="#icon-alert-triangle"/></svg> <div>L'exécution d'exploits est strictement restreinte aux sous-réseaux autorisés (Labo) par le backend.</div></div>
+        <div class="tool-row">
+          <div class="field"><label>Sous-réseaux autorisés (CIDR)</label><input type="text" id="settings-subnets" placeholder="192.168.56.0/24,10.141.67.0/24"/></div>
+          <button class="btn btn-primary" onclick="saveSettingsSubnets()" id="settings-subnets-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-save"/></svg> Enregistrer</button>
+        </div>
+        <div id="settings-subnets-status" style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--text2)"></div>
+      </div>
+    </div>
+
+    <!-- HYDRA -->
+    <div class="page" id="page-hydra">
+      <div class="page-header">
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-key"/></svg> Hydra — Bruteforce</h2><p>Test de mots de passe SSH, FTP, HTTP</p></div>
+      </div>
+      <div class="alert alert-warn"><svg class="icon" style="width:16px;height:16px;flex-shrink:0"><use href="#icon-alert-triangle"/></svg> <div>Hydra génère un trafic intensif. Utilisez uniquement sur des cibles <strong>autorisées par écrit</strong>.</div></div>
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Paramètres</div>
+        <div class="tool-row">
+          <div class="field"><label>Cible (IP ou domaine)</label><input type="text" id="hydra-target" placeholder="192.168.1.1"/></div>
+          <div class="field" style="max-width:160px">
+            <label>Service</label>
+            <select id="hydra-service">
+              <option value="ssh">SSH (port 22)</option>
+              <option value="ftp">FTP (port 21)</option>
+              <option value="http-get">HTTP GET</option>
+              <option value="rdp">RDP (port 3389)</option>
+              <option value="smb">SMB (port 445)</option>
+              <option value="mysql">MySQL (port 3306)</option>
+            </select>
+          </div>
+          <div class="field" style="max-width:170px">
+            <label>Source utilisateur</label>
+            <select id="hydra-user-source" onchange="onHydraUserSource()">
+              <option value="single">Utilisateur unique</option>
+              <option value="list">Liste d'utilisateurs</option>
+              <option value="custom">Fichier personnalisé</option>
+            </select>
+          </div>
+          <div class="field" style="max-width:180px" id="hydra-user-single-wrap">
+            <label>Nom d'utilisateur</label>
+            <input type="text" id="hydra-username" placeholder="admin" value="admin"/>
+          </div>
+          <div class="field" style="max-width:230px;display:none" id="hydra-user-list-wrap">
+            <label>Liste d'utilisateurs</label>
+            <select id="hydra-userlist"></select>
+          </div>
+          <div class="field" style="max-width:230px;display:none" id="hydra-user-custom-wrap">
+            <label>Chemin du fichier</label>
+            <input type="text" id="hydra-userlist-path" placeholder="/usr/share/wordlists/users.txt"/>
+          </div>
+          <div class="field" style="max-width:180px">
+            <label>Wordlist (mots de passe)</label>
+            <select id="hydra-wordlist">
+              <option value="common">Commune (10 mots)</option>
+            </select>
+          </div>
+          <button class="btn btn-danger" onclick="runHydra()" id="hydra-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-key"/></svg> Lancer Hydra</button>
+        </div>
+        <div class="progress-bar" id="hydra-pb"><div class="progress-fill" id="hydra-fill"></div></div>
+        <div class="terminal" id="hydra-out"><span class="terminal-ph">> En attente... (nécessite hydra: sudo apt install hydra)</span></div>
+      </div>
+      <div class="card" id="hydra-creds-card" style="display:none">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-key"/></svg> Identifiants trouvés</div>
+        <p style="font-size:12px;color:var(--text2);margin-bottom:10px">Ouvrez une vraie session Metasploit avec ces identifiants (SSH). La session apparaît dans <strong>Post-Exploitation → Sessions</strong>.</p>
+        <div id="hydra-creds"></div>
+      </div>
+    </div>
+
+    <!-- CRACKING (John the Ripper) -->
+    <div class="page" id="page-cracking">
+      <div class="page-header">
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-hash"/></svg> Cracking de hashes — John the Ripper</h2><p>Cassage de mots de passe par dictionnaire (post-exploitation)</p></div>
+      </div>
+      <div class="alert alert-warn"><svg class="icon" style="width:16px;height:16px;flex-shrink:0"><use href="#icon-alert-triangle"/></svg> <div>Ne cassez que des hashes obtenus dans le cadre d'un test <strong>autorisé par écrit</strong>. Les identifiants déchiffrés sont sensibles.</div></div>
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-sliders"/></svg> Paramètres</div>
+        <div class="field">
+          <label>Hashes (un par ligne — format <code>hash</code> ou <code>utilisateur:hash</code>)</label>
+          <textarea id="john-hashes" rows="5" placeholder="5f4dcc3b5aa765d61d8327deb882cf99&#10;admin:$1$xyz$..." style="font-family:var(--mono);font-size:13px;width:100%;resize:vertical"></textarea>
+        </div>
+        <div class="tool-row" style="align-items:flex-end">
+          <div class="field" style="max-width:230px">
+            <label>Fichier de hashes (optionnel)</label>
+            <input type="file" id="john-file" onchange="loadHashFile(event)"/>
+          </div>
+          <div class="field" style="max-width:200px">
+            <label>Format</label>
+            <select id="john-format">
+              <option value="auto">Auto-détection</option>
+              <option value="md5">MD5 brut (Raw-MD5)</option>
+              <option value="sha1">SHA1 brut (Raw-SHA1)</option>
+              <option value="sha256">SHA256 brut (Raw-SHA256)</option>
+              <option value="bcrypt">bcrypt</option>
+              <option value="ntlm">NTLM (NT)</option>
+              <option value="md5crypt">md5crypt</option>
+              <option value="sha512crypt">sha512crypt</option>
+            </select>
+          </div>
+          <div class="field" style="max-width:200px">
+            <label>Wordlist</label>
+            <select id="john-wordlist"><option value="rockyou">rockyou.txt</option></select>
+          </div>
+          <div class="field" style="max-width:230px">
+            <label>Wordlist personnalisée (chemin)</label>
+            <input type="text" id="john-wordlist-path" placeholder="/usr/share/wordlists/…"/>
+          </div>
+          <div class="field" style="max-width:170px">
+            <label>Règles</label>
+            <select id="john-rules">
+              <option value="none">Aucune</option>
+              <option value="best64">best64</option>
+              <option value="jumbo">jumbo</option>
+            </select>
+          </div>
+          <button class="btn btn-danger" onclick="runJohn()" id="john-btn"><svg class="icon" style="width:14px;height:14px"><use href="#icon-hash"/></svg> Lancer le cracking</button>
+          <button class="btn btn-secondary" onclick="stopJohn()" id="john-stop-btn" style="display:none"><svg class="icon" style="width:14px;height:14px"><use href="#icon-ban"/></svg> Arrêter</button>
+        </div>
+        <div class="progress-bar" id="john-pb"><div class="progress-fill" id="john-fill"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-key"/></svg> Identifiants déchiffrés</div>
+        <div id="john-cracked">
+          <div style="color:var(--text3);font-family:var(--sans);font-size:12px">Aucun hash cassé pour l'instant.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-clipboard-list"/></svg> Sortie John</div>
+        <div class="terminal" id="john-out"><span class="terminal-ph">> En attente... (nécessite John the Ripper jumbo)</span></div>
+      </div>
+    </div>
+
+    <!-- SESSIONS (Metasploit) -->
+    <div class="page" id="page-sessions">
+      <div class="page-header">
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-monitor"/></svg> Sessions — Post-Exploitation</h2><p>Sessions Metasploit actives (shell / meterpreter)</p></div>
+        <button class="btn btn-secondary" onclick="loadSessions()"><svg class="icon" style="width:14px;height:14px"><use href="#icon-refresh"/></svg> Rafraîchir</button>
+      </div>
+      <div class="alert alert-warn"><svg class="icon" style="width:16px;height:16px;flex-shrink:0"><use href="#icon-alert-triangle"/></svg> <div><strong>Actions irréversibles sur des systèmes réels.</strong> Les commandes envoyées s'exécutent sur la cible. N'opérez que sur des systèmes <strong>autorisés par écrit</strong>.</div></div>
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <div class="card-title" style="margin-bottom:0"><svg class="icon" style="width:15px;height:15px"><use href="#icon-server"/></svg> Sessions actives</div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--text3)">LHOST détecté : <span id="sessions-lhost">—</span></div>
+        </div>
+        <div id="sessions-list" style="margin-top:12px">
+          <div style="color:var(--text3);font-family:var(--sans);font-size:12px">Chargement…</div>
+        </div>
+      </div>
+      <div class="card" id="session-console-card" style="display:none">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-monitor"/></svg> Console — session <span id="session-console-id" style="font-family:var(--mono)"></span></div>
+        <div class="terminal" id="session-out" style="min-height:200px"><span class="terminal-ph">> Sélectionnez une session puis envoyez une commande.</span></div>
+        <div class="tool-row" style="margin-top:10px">
+          <div class="field" style="flex:1"><input type="text" id="session-cmd" placeholder="ex: id ; uname -a ; whoami" onkeydown="if(event.key==='Enter')sendSessionCmd()"/></div>
+          <button class="btn btn-primary" onclick="sendSessionCmd()"><svg class="icon" style="width:14px;height:14px"><use href="#icon-arrow-right"/></svg> Exécuter</button>
+        </div>
+      </div>
+    </div>
+
+        <!-- A PROPOS -->
     <div class="page" id="page-about">
       <div class="page-header">
-        <div><h2>⚖ À propos & Cadre légal</h2><p>Informations réglementaires et conditions d'utilisation</p></div>
+        <div><h2><svg class="icon" style="width:18px;height:18px"><use href="#icon-scale"/></svg> À propos & Cadre légal</h2><p>Informations réglementaires et conditions d'utilisation</p></div>
       </div>
 
       <!-- BANDEAU AVERTISSEMENT -->
-      <div style="background:rgba(255,68,68,0.08);border:2px solid rgba(255,68,68,0.4);border-radius:12px;padding:24px 28px;margin-bottom:24px;display:flex;gap:20px;align-items:flex-start">
-        <div style="font-size:36px;flex-shrink:0">⚠</div>
+      <div style="background:rgba(255,87,87,0.08);border:2px solid rgba(255,87,87,0.4);border-radius:var(--r2);padding:24px 28px;margin-bottom:24px;display:flex;gap:20px;align-items:flex-start">
+        <svg class="icon" style="width:32px;height:32px;flex-shrink:0;color:var(--red)"><use href="#icon-alert-triangle"/></svg>
         <div>
           <div style="font-size:16px;font-weight:800;color:var(--red);margin-bottom:10px;letter-spacing:-0.3px">
             AVERTISSEMENT — LISEZ ATTENTIVEMENT AVANT UTILISATION
           </div>
-          <div style="font-size:13px;color:var(--text2);line-height:1.9;font-family:var(--mono)">
+          <div style="font-size:13px;color:var(--text2);line-height:1.9;font-family:var(--sans)">
             L'utilisation de cet outil sans autorisation écrite préalable constitue une infraction pénale.<br>
             Si vous n'êtes pas dans un cadre d'intervention autorisé, <strong style="color:var(--red)">déconnectez-vous immédiatement.</strong>
           </div>
-          <button onclick="doLogout()" style="margin-top:14px;padding:10px 24px;background:rgba(255,68,68,0.15);border:1px solid var(--red);border-radius:8px;color:var(--red);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:0.5px" onmouseover="this.style.background='var(--red)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,68,68,0.15)';this.style.color='var(--red)'">
+          <button onclick="doLogout()" style="margin-top:14px;padding:10px 24px;background:rgba(255,87,87,0.15);border:1px solid var(--red);border-radius:var(--r);color:var(--red);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:0.5px" onmouseover="this.style.background='var(--red)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,87,87,0.15)';this.style.color='var(--red)'">
             SE DÉCONNECTER MAINTENANT
           </button>
         </div>
@@ -486,37 +1093,37 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 
       <!-- PRÉSENTATION -->
       <div class="card">
-        <div class="card-title">🛡 Présentation de l'outil</div>
-        <div style="font-size:13px;color:var(--text2);line-height:2;font-family:var(--mono)">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-shield"/></svg> Présentation de l'outil</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.8;font-family:var(--sans)">
           <p style="margin-bottom:12px">
-            <strong style="color:var(--accent)">PenToolbox v4.0</strong> est une plateforme de test d'intrusion (<em>penetration testing</em>) développée dans le cadre d'un projet académique de Mastère Cybersécurité (M1). Elle a été conçue pour permettre à des équipes de sécurité offensive d'automatiser et de standardiser leurs missions de pentest.
+            <strong style="color:var(--accent)">PenToolbox v4.0</strong> est une plateforme de test d'intrusion (<em>penetration testing</em>) conçue pour les équipes de sécurité offensive réalisant des missions de pentest pour des entreprises privées et des institutions publiques.
           </p>
           <p style="margin-bottom:12px">
-            Cet outil intègre des modules de reconnaissance DNS, de scan réseau, d'analyse de vulnérabilités et de génération de rapports. Il est destiné à un usage professionnel dans un environnement contrôlé et autorisé.
+            Elle permet d'automatiser et de standardiser l'ensemble des étapes d'un pentest — de la reconnaissance à l'exploitation — réduisant significativement le temps d'intervention tout en garantissant la traçabilité et la qualité des rapports produits.
           </p>
           <p>
-            <strong style="color:var(--text)">Développé par :</strong> Équipe M1 Cybersécurité — 2025<br>
-            <strong style="color:var(--text)">Version :</strong> 4.0 — Usage interne uniquement<br>
-            <strong style="color:var(--text)">Outils intégrés :</strong> DNSDumpster, Nmap, Nikto, SQLMap, ARP Scan
+            <strong style="color:var(--text)">Version :</strong> 4.0 — Usage professionnel interne<br>
+            <strong style="color:var(--text)">Modules :</strong> DNSDumpster, Énumération SMB, Nmap, Nikto, SQLMap, Hydra, OpenVAS, Metasploit<br>
+            <strong style="color:var(--text)">Sécurité :</strong> Bcrypt, Fernet, Audit logs, Rate limiting, HTTPS
           </p>
         </div>
       </div>
 
       <!-- CADRE LÉGAL -->
       <div class="card">
-        <div class="card-title">📜 Cadre réglementaire</div>
-        <div style="font-size:13px;color:var(--text2);line-height:2;font-family:var(--mono)">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-file-text"/></svg> Cadre réglementaire</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.8;font-family:var(--sans)">
           <div style="margin-bottom:16px">
-            <div style="color:var(--accent);font-weight:700;margin-bottom:6px">🇫🇷 Droit français</div>
+            <div style="color:var(--accent);font-weight:700;margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase;font-size:11px">FR — Droit français</div>
             L'accès frauduleux à un système informatique est réprimé par les articles <strong style="color:var(--text)">323-1 à 323-7 du Code Pénal</strong>.<br>
             Les peines encourues vont jusqu'à <strong style="color:var(--red)">5 ans d'emprisonnement et 150 000 € d'amende</strong> pour intrusion non autorisée dans un STAD (Système de Traitement Automatisé de Données).
           </div>
           <div style="margin-bottom:16px">
-            <div style="color:var(--accent);font-weight:700;margin-bottom:6px">🇪🇺 Règlement européen</div>
+            <div style="color:var(--accent);font-weight:700;margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase;font-size:11px">UE — Règlement européen</div>
             La directive NIS2 (2022/2555) et le RGPD (Règlement 2016/679) encadrent le traitement des données et la cybersécurité au sein de l'Union Européenne. Tout test d'intrusion doit être mené dans le respect de ces réglementations.
           </div>
           <div>
-            <div style="color:var(--accent);font-weight:700;margin-bottom:6px">🌍 Droit international</div>
+            <div style="color:var(--accent);font-weight:700;margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase;font-size:11px">International — Droit international</div>
             La Convention de Budapest sur la cybercriminalité (STCE n°185) harmonise les infractions informatiques à l'échelle internationale. Les tests réalisés sur des systèmes étrangers peuvent relever de plusieurs juridictions simultanément.
           </div>
         </div>
@@ -524,23 +1131,23 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 
       <!-- CONDITIONS D'UTILISATION -->
       <div class="card">
-        <div class="card-title">✅ Conditions d'utilisation autorisée</div>
-        <div style="font-size:13px;line-height:2;font-family:var(--mono)">
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-check"/></svg> Conditions d'utilisation autorisée</div>
+        <div style="font-size:13px;line-height:1.8;font-family:var(--sans)">
           <div style="display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.2);border-radius:8px">
-              <span style="color:var(--green);font-size:16px;flex-shrink:0">✓</span>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.2);border-radius:var(--r)">
+              <svg class="icon" style="width:16px;height:16px;flex-shrink:0;color:var(--green)"><use href="#icon-check"/></svg>
               <div style="color:var(--text2)"><strong style="color:var(--text)">Accord écrit préalable</strong><br>Un document signé par le propriétaire du système cible doit être obtenu avant tout test. Cet accord doit préciser le périmètre, les dates et les méthodes autorisées.</div>
             </div>
-            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.2);border-radius:8px">
-              <span style="color:var(--green);font-size:16px;flex-shrink:0">✓</span>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.2);border-radius:var(--r)">
+              <svg class="icon" style="width:16px;height:16px;flex-shrink:0;color:var(--green)"><use href="#icon-check"/></svg>
               <div style="color:var(--text2)"><strong style="color:var(--text)">Périmètre défini et respecté</strong><br>Les tests ne doivent être menés que sur les systèmes, adresses IP et services explicitement mentionnés dans l'accord. Tout dépassement est une infraction.</div>
             </div>
-            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.2);border-radius:8px">
-              <span style="color:var(--green);font-size:16px;flex-shrink:0">✓</span>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.2);border-radius:var(--r)">
+              <svg class="icon" style="width:16px;height:16px;flex-shrink:0;color:var(--green)"><use href="#icon-check"/></svg>
               <div style="color:var(--text2)"><strong style="color:var(--text)">Confidentialité des résultats</strong><br>Les rapports générés sont strictement confidentiels. Leur diffusion est limitée aux parties prenantes désignées dans le contrat de prestation.</div>
             </div>
-            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.2);border-radius:8px">
-              <span style="color:var(--green);font-size:16px;flex-shrink:0">✓</span>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.2);border-radius:var(--r)">
+              <svg class="icon" style="width:16px;height:16px;flex-shrink:0;color:var(--green)"><use href="#icon-check"/></svg>
               <div style="color:var(--text2)"><strong style="color:var(--text)">Traçabilité des actions</strong><br>Toutes les actions menées pendant un test doivent être documentées et horodatées. Cette toolbox génère automatiquement des rapports à cet effet.</div>
             </div>
           </div>
@@ -549,35 +1156,35 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 
       <!-- INTERDICTIONS -->
       <div class="card">
-        <div class="card-title">🚫 Usages strictement interdits</div>
-        <div style="font-size:13px;line-height:2;font-family:var(--mono);display:flex;flex-direction:column;gap:8px">
-          <div style="display:flex;gap:12px;padding:10px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.2);border-radius:8px">
-            <span style="color:var(--red);flex-shrink:0">✗</span>
+        <div class="card-title"><svg class="icon" style="width:15px;height:15px"><use href="#icon-ban"/></svg> Usages strictement interdits</div>
+        <div style="font-size:13px;line-height:1.8;font-family:var(--sans);display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:12px;padding:10px;background:rgba(255,87,87,0.05);border:1px solid rgba(255,87,87,0.2);border-radius:var(--r)">
+            <svg class="icon" style="width:15px;height:15px;flex-shrink:0;color:var(--red)"><use href="#icon-ban"/></svg>
             <div style="color:var(--text2)">Tests sur des systèmes tiers sans autorisation écrite explicite</div>
           </div>
-          <div style="display:flex;gap:12px;padding:10px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.2);border-radius:8px">
-            <span style="color:var(--red);flex-shrink:0">✗</span>
+          <div style="display:flex;gap:12px;padding:10px;background:rgba(255,87,87,0.05);border:1px solid rgba(255,87,87,0.2);border-radius:var(--r)">
+            <svg class="icon" style="width:15px;height:15px;flex-shrink:0;color:var(--red)"><use href="#icon-ban"/></svg>
             <div style="color:var(--text2)">Utilisation à des fins malveillantes, d'espionnage ou de sabotage</div>
           </div>
-          <div style="display:flex;gap:12px;padding:10px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.2);border-radius:8px">
-            <span style="color:var(--red);flex-shrink:0">✗</span>
+          <div style="display:flex;gap:12px;padding:10px;background:rgba(255,87,87,0.05);border:1px solid rgba(255,87,87,0.2);border-radius:var(--r)">
+            <svg class="icon" style="width:15px;height:15px;flex-shrink:0;color:var(--red)"><use href="#icon-ban"/></svg>
             <div style="color:var(--text2)">Dépassement du périmètre défini dans l'accord de test</div>
           </div>
-          <div style="display:flex;gap:12px;padding:10px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.2);border-radius:8px">
-            <span style="color:var(--red);flex-shrink:0">✗</span>
+          <div style="display:flex;gap:12px;padding:10px;background:rgba(255,87,87,0.05);border:1px solid rgba(255,87,87,0.2);border-radius:var(--r)">
+            <svg class="icon" style="width:15px;height:15px;flex-shrink:0;color:var(--red)"><use href="#icon-ban"/></svg>
             <div style="color:var(--text2)">Divulgation des rapports ou des vulnérabilités découvertes à des tiers non autorisés</div>
           </div>
-          <div style="display:flex;gap:12px;padding:10px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.2);border-radius:8px">
-            <span style="color:var(--red);flex-shrink:0">✗</span>
+          <div style="display:flex;gap:12px;padding:10px;background:rgba(255,87,87,0.05);border:1px solid rgba(255,87,87,0.2);border-radius:var(--r)">
+            <svg class="icon" style="width:15px;height:15px;flex-shrink:0;color:var(--red)"><use href="#icon-ban"/></svg>
             <div style="color:var(--text2)">Redistribution ou modification de cet outil sans autorisation de l'équipe de développement</div>
           </div>
         </div>
       </div>
 
       <!-- ACCORD -->
-      <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.25);border-radius:12px;padding:24px 28px;margin-bottom:8px">
-        <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:12px">📋 Déclaration de conformité</div>
-        <div style="font-size:12px;color:var(--text2);font-family:var(--mono);line-height:2">
+      <div style="background:rgba(185,242,60,0.05);border:1px solid rgba(185,242,60,0.25);border-radius:var(--r2);padding:24px 28px;margin-bottom:8px">
+        <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px"><svg class="icon" style="width:16px;height:16px"><use href="#icon-clipboard-list"/></svg> Déclaration de conformité</div>
+        <div style="font-size:12px;color:var(--text2);font-family:var(--sans);line-height:1.8">
           En utilisant PenToolbox, vous déclarez :<br>
           <strong style="color:var(--text)">1.</strong> Avoir obtenu l'accord écrit du propriétaire des systèmes testés.<br>
           <strong style="color:var(--text)">2.</strong> Agir dans le cadre d'une mission de sécurité offensive légale et éthique.<br>
@@ -585,14 +1192,12 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
           <strong style="color:var(--text)">4.</strong> Assumer l'entière responsabilité de l'utilisation de cet outil.<br><br>
           <strong style="color:var(--red)">Si l'une de ces conditions n'est pas remplie, déconnectez-vous immédiatement.</strong>
         </div>
-        <button onclick="doLogout()" style="margin-top:16px;padding:10px 24px;background:rgba(255,68,68,0.12);border:1px solid var(--red);border-radius:8px;color:var(--red);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer" onmouseover="this.style.background='var(--red)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,68,68,0.12)';this.style.color='var(--red)'">
-          ⬅ Je ne suis pas autorisé — Me déconnecter
+        <button onclick="doLogout()" style="margin-top:16px;padding:10px 24px;background:rgba(255,87,87,0.12);border:1px solid var(--red);border-radius:var(--r);color:var(--red);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--red)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,87,87,0.12)';this.style.color='var(--red)'">
+          <svg class="icon" style="width:14px;height:14px"><use href="#icon-arrow-left"/></svg> Je ne suis pas autorisé — Me déconnecter
         </button>
       </div>
 
-      <div style="text-align:center;padding:20px;font-size:11px;color:var(--text3);font-family:var(--mono)">
-        PenToolbox v4.0 — Projet M1 Cybersécurité 2025 — Usage interne et professionnel uniquement
-      </div>
+
     </div>
 
   </main>
@@ -602,11 +1207,12 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 <!-- MODAL -->
 <div class="modal-overlay" id="report-modal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
+    <button class="modal-close" onclick="closeModal()"><svg class="icon" style="width:18px;height:18px"><use href="#icon-x"/></svg></button>
     <div id="modal-content"></div>
   </div>
 </div>
 
+<script src="/static/vendor/chart.umd.min.js"></script>
 <script src="/static/app.js"></script>
 </body>
 </html>

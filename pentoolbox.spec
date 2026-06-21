@@ -7,7 +7,7 @@ from pathlib import Path
 block_cipher = None
 
 a = Analysis(
-    ['app.py'],
+    ['app/app.py'],
     pathex=['.'],
     binaries=[],
     datas=[

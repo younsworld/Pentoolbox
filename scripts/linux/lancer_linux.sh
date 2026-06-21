@@ -1,4 +1,8 @@
 #!/bin/bash
+# Script desormais dans scripts/linux/ -> on revient a la racine du projet
+# pour que requirements.txt / app.py (chemins relatifs ci-dessous) restent corrects.
+cd "$(dirname "$0")/../.." || exit 1
+
 echo "================================================"
 echo "  PenToolbox v4.0 -- Lancement Linux/Mac"
 echo "================================================"
@@ -26,7 +30,7 @@ done
 
 echo ""
 echo "[*] Lancement du serveur Flask..."
-echo "[*] Ouvre : http://localhost:5000"
+echo "[*] Ouvre : https://localhost:5000"
 echo "[*] Ctrl+C pour arrêter"
 echo ""
-python3 app.py
+python3 app/app.py
