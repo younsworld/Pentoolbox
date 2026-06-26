@@ -1,4 +1,4 @@
-# PenToolbox v4.0 — Guide d'installation
+# PenToolbox — Guide d'installation
 
 ## Prérequis
 - Python 3.10+ (https://python.org)
