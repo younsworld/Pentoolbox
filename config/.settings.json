@@ -1,0 +1,6 @@
+{
+  "allowed_exploit_subnets": "192.168.56.0/24, 127.0.0.0/24",
+  "auto_report": {
+    "nmap": true
+  }
+}
