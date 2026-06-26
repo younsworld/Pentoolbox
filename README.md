@@ -9,7 +9,7 @@
 ## 🪟 Windows — Lancement rapide
 
 ```
-Double-clic sur : LANCER.bat
+Double-clic sur : INSTALLER.bat puis LANCER.bat
 ```
 
 Ou en ligne de commande :
