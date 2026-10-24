@@ -1,0 +1,4 @@
+# Clés et certificats : jamais versionnés (régénérés au runtime dans secrets/)
+secrets/
+*.pem
+*.key
